@@ -42,8 +42,8 @@ Use $agent-design 澄清我的 Agent 想法，产出经过评审的 agent.design
 
 ## 仓库结构
 
-- `skills/` — 七个技能（每个含 `SKILL.md` 与宿主元数据）。
-- `knowledge/` — 共享、版本化的参考知识库（案例、规则、选型、实践、标准 + `index.yaml`），按触发加载。
+- `skills/` — 七个技能（每个含 `SKILL.md`、`references.md` 加载清单与宿主元数据）。
+- `knowledge/` — 共享、版本化的参考知识库（案例、规则、选型、实践、标准 + `index.yaml`），按触发加载。**大型集合按关注点拆分**（如 `standards/` 下 `01-foundations` … `10-references-and-evolution`）；整个知识库用单一导航页 [`knowledge/README.md`](./knowledge/README.md) 索引，每个技能另带一份 `references.md`，指明该阶段该读哪几个主题文件。
 - `docs/` — 文档与架构决策（`docs/maintainers/decisions/`）。
 
 ## 验证
@@ -65,9 +65,11 @@ done
 ## 文档
 
 - [架构决策：技能优先的工具集](./docs/maintainers/decisions/0001-skill-first-toolkit.md)
-- [Agent 工程实践规范](./knowledge/standards/agent-engineering-standard.md)
-- [Agent 开发问题解决经验](./knowledge/cases/agent-development-lessons.md)
-- [AI 驱动开发实践指南](./knowledge/practices/ai-native-dev-playbook.md)
+- [架构决策：知识库按关注点拆分](./docs/maintainers/decisions/0002-knowledge-split-by-concern.md)
+- [知识库导航索引](./knowledge/README.md)
+- [Agent 工程实践规范](./knowledge/standards/01-foundations.md)（§1 起，集合导航见知识库索引）
+- [Agent 开发问题解决经验](./knowledge/cases/01-context-and-tools.md)（§1 起）
+- [AI 驱动开发实践指南](./knowledge/practices/01-mindset-and-collaboration.md)（§1 起）
 
 ## 许可
 

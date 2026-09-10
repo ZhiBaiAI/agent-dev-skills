@@ -45,9 +45,11 @@ description: Agent 架构的复杂度纪律。当要选择执行模型、添加�
 
 ## 成本随档位而不同（playbook §7）
 
+以下 `playbook` 的成本部分见 `knowledge/practices/04-cost-and-rollout.md`（§7）。
+
 - 子 Agent 默认用更便宜的模型——定义良好的子任务不需要强模型；协调者保留强模型。这是单一最大的成本杠杆。
 - 重复/批量工作属于代码编排（一次模型往返、脚本总结），而不是 N 次顺序工具调用。
 - 全局缓存稳定前缀（系统提示词、工具定义），会话缓存会话稳定内容，易变内容放最后。
 - 优化**整任务成本**，不是单调用成本。一个把任务留在未完成状态的廉价调用是纯浪费；用“任务完成”作为分母来度量 token 消耗。
 
-参考：`knowledge/cases/agent-development-lessons.md` — 反复出现的过度架构失败模式（§3 多智能体、§4 持久化执行）；`knowledge/rules/architecture-guardrails.md`；standard §3、§3.8。
+参考：`knowledge/cases/02-multi-agent-and-durability.md` — 反复出现的过度架构失败模式（§3 多智能体、§4 持久化执行）；`knowledge/standards/03-orchestration-and-hitl.md` §3、§3.8；`knowledge/rules/architecture-guardrails.md`。完整加载清单见 [references.md](./references.md)。

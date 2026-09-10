@@ -9,7 +9,7 @@
 ## 仓库结构
 
 - `skills/`：七个技能——五个用户调用的编排技能（`agent-design`、`agent-stack`、`agent-scaffold`、`agent-eval`、`agent-review`）和两个模型调用的纪律技能（`security-gates`、`complexity-ladder`）。
-- `knowledge/`：共享、版本化的参考知识库，技能按触发加载（案例、规则、选型、实践、标准 + `index.yaml`）。
+- `knowledge/`：共享、版本化的参考知识库，技能按触发加载（案例、规则、选型、实践、标准 + `index.yaml`）。大型集合按关注点拆成主题文件（保留原章节编号）；知识库用单一导航页 `knowledge/README.md` 索引，每个技能用 `references.md` 声明自己的加载清单。
 - `docs/`：文档与架构决策（见 `docs/maintainers/decisions/`）。
 
 修改模块前先读最近的嵌套 `AGENTS.md`（如有）。
@@ -24,7 +24,7 @@
 - **评测与特性同生。**没有评测的能力是不完整的工作；bug 蒸馏为回归评测。
 - **安全默认。**写工具、浏览器、shell、MCP 与外部凭据触发强制安全控制（见 `security-gates`）。
 - **不覆盖用户代码。**既有项目只做增量改动；破坏性改动走用户批准的 diff。
-- **Harness 内容按归属。**L0/L1 只作参考性学习材料，不当作强制规则；L2 组织流程与 L3 责任判断是仓库内投资。见 `knowledge/standards/agent-engineering-standard.md` §1.2。
+- **Harness 内容按归属。**L0/L1 只作参考性学习材料，不当作强制规则；L2 组织流程与 L3 责任判断是仓库内投资。见 `knowledge/standards/01-foundations.md` §1.2。
 - **标准优于路径。**成功标准必须机器可检查（测试绿、产物存在、diff 为空、退出码 0）；怎么到达留给 agent。
 - **技能路由、知识加载、agent 执行。**技能决定工作流；知识按触发加载，不复制进技能。
 
@@ -50,10 +50,17 @@ for f in skills/*/SKILL.md; do
   grep -q '^name:' "$f" || echo "no name: $f"
   grep -q '^description:' "$f" || echo "no description: $f"
 done
-# 技能引用的 knowledge/ 文件必须存在
+# 技能引用的 knowledge/ 文件必须存在（含 references.md 里的引用）
 for f in $(grep -rho 'knowledge/[a-zA-Z0-9/._-]*' skills/ | sort -u); do
   test -f "$f" || echo "dangling: $f"
 done
+
+# 每个技能必须有 references.md 加载清单
+for d in skills/*/; do test -f "$d/references.md" || echo "missing $d/references.md"; done
+
+# 知识库导航页与索引必须存在
+test -f knowledge/README.md || echo "missing knowledge/README.md"
+test -f knowledge/index.yaml || echo "missing knowledge/index.yaml"
 ```
 
 ## 完成标准
@@ -68,4 +75,4 @@ done
 
 ## 规则来源
 
-规则起源见 `knowledge/standards/agent-engineering-standard.md`（人类可读工程标准），并蒸馏进 `skills/` 下的技能集。
+规则起源见 `knowledge/standards/`（人类可读工程标准，入口 `knowledge/README.md`），并蒸馏进 `skills/` 下的技能集。

@@ -1,7 +1,8 @@
 # 贡献指南
 
 1. 先读仓库根目录的 `AGENTS.md`，理解技能集的定位与工作规则。
-2. 技能格式：每个技能是一个目录，含 `SKILL.md`，YAML frontmatter 必须有 `name` 与 `description`。正文精简、触发条件明确；参考内容放 `knowledge/`，技能里引用而不是复制。
+2. 技能格式：每个技能是一个目录，含 `SKILL.md`，YAML frontmatter 必须有 `name` 与 `description`。正文精简、触发条件明确；参考内容放 `knowledge/`，技能里引用而不是复制。每个技能附一份 `references.md`，按阶段列出该加载哪些主题文件。
+2.1 知识文件保持小而聚焦：单个主题文件宜在 ~350 行内；大型集合按关注点拆分，不复制正文。每个集合拆出的主题文件在 `knowledge/README.md` 登记（全库唯一导航页）；技能引用要指向具体主题文件，不要指向集合目录或导航页。新增集合或增删主题文件时，同步更新 `knowledge/README.md`。
 3. 技能只引用 `knowledge/` 内的文件，且引用必须可解析——CI 会校验悬空引用。
 4. 提 PR 前在本地跑一遍结构校验（见 README「验证」一节）。
 5. 新的架构决策（Agent、框架、多智能体、持久化执行、自主循环）需要先落 ADR，放 `docs/maintainers/decisions/`。

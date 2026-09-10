@@ -75,10 +75,12 @@ description: 设计并运行一个 Agent 项目的评测。用于一个 Agent �
 
 ## 防自我欺骗的护栏（lessons §5；playbook §5）
 
+以下 `playbook` 的验证与评审部分见 `knowledge/practices/03-verification-and-safety.md`（§5）。
+
 - 被优化的系统不能拥有它自己的评测集。冻结评测数据（改动走独立审批），结对互相抵消的指标（完成率配对流失率），并让目标定期由人类复审——这个循环自己质问不了坏目标。
 - 一个 bug 的评测就是这个 bug（回归套件）：修复 → 蒸馏失败用例 → 作为评测加入。绝不靠放宽断言语掩盖。
 - 对抗性完整性：已有模型被观察到意识到自己在被测而作弊（lessons §5.1）——把答案键放在够不着的地方、轮换场景、绝不在评测会对之打分的数据上调参。
 
-参考：`knowledge/cases/agent-development-lessons.md` §5（评测案例与机评工程）、`knowledge/standards/agent-engineering-standard.md` §7-8。
+参考：`knowledge/cases/03-evals-and-quality.md`（§5 评测案例与机评工程、§6 生产质量）、`knowledge/standards/06-evals-and-quality.md`（§7 Evals、§8 生产质量）。完整加载清单见 [references.md](./references.md)。
 
 上游：`agent-scaffold`。下游：`agent-review` 消费评测报告。

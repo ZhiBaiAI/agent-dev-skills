@@ -29,7 +29,7 @@ description: 根据设计与选型决策生成一个 Agent 项目。用于 agent
 
 ## 交付纪律（standard §12；playbook §3、§5）
 
-构建时就融入这些，让交付的项目可续接、可问责：
+构建时就融入这些，让交付的项目可续接、可问责（`playbook` 的项目 harness 与验证部分见 `knowledge/practices/02-harness-and-knowledge.md`、`03-verification-and-safety.md`）：
 
 - **逐步开发**（standard §12.1）：把工作拆成可验证的特性/任务项；一次推进一个或少数几个；会话结束前留一份结构化交接；保持工作区可构建、可读、可继续。绝不在未验证的情况下批量标记任务完成。
 - **项目文件骨架**按设计（*.agent/* 树）在第一步就建好——而不是事后清理。用文件、文档、工件就能让一个全新 Agent 续接，绝不依赖聊天记录（playbook §3.3 “换 Agent 检查”）。
@@ -38,4 +38,4 @@ description: 根据设计与选型决策生成一个 Agent 项目。用于 agent
 - **交付链严格门控，判断链宽松**（playbook §3.2）：防止假绿的证据门槛要严格（报告是本轮产出的、测试目录匹配、必跑场景真跑了、没有推到受保护分支）。判断/决策类输出可以明确标注缺口而优雅退化，只要缺口被抛到下游。不要把每个任务都变成僵硬的门槛——但要把那些对误报敏感的门槛做严。
 - **完成要对齐外部证据**（standard §8.1）：不能仅凭一次本地的绿色运行就宣告任务完成——代码版本、工作项状态、交付证据必须一致（见 `agent-review`）。
 
-上游：`agent-design`、`agent-stack`。下游：`agent-eval`、`agent-review`。
+上游：`agent-design`、`agent-stack`。下游：`agent-eval`、`agent-review`。完整加载清单见 [references.md](./references.md)。

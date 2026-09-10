@@ -33,6 +33,8 @@ Notes：评测状态、漂移观察、待解决问题
 
 ## 评审纪律（playbook §5；standard §8、§13）
 
+以下 `playbook` 的验证与评审部分见 `knowledge/practices/03-verification-and-safety.md`，成本部分见 `knowledge/practices/04-cost-and-rollout.md`。
+
 - **只报告可行动的发现**（playbook §5）：只报作者能动手的——具体位置（file:line）与修复方向。跳过风格偏好、假想的未来设计担忧、不可验证的顾虑。评审对准代码与其意图，不去重新翻案已定局的架构。
 - **评审意图与权衡，不只是行**（playbook §5）：大变更的交付物带一份意图说明（改了什么、关键权衡及为什么）。在意图层面提问；代码细节交给机械检查。一个意图清晰的大变更胜过意图不明的更小变更。
 - **失败 → 工程资产**（standard §8.8）：评审应确认一次失败/事故变成了回归测试或评测，而不仅仅是一行日志。路径是 失败 → 根因 → 纠正措施 → 测试/评测 → 规则/门槛 → 发布 + 回滚。根因修复改变结构，而不只是更大声的提示词。
@@ -45,6 +47,6 @@ Notes：评测状态、漂移观察、待解决问题
 
 SHIP 之前确认变更用**独立证据**（不是作者的自称）满足了自己的成功标准：整套真的按顺序跑了、日志被引用、产物存在、没有推到受保护分支、没有掩盖的失败（standard §7.6；playbook §5）。如果某个门槛被跳过或总是绿色，这本身就构成 MUST-fix 的发现。
 
-参考：检查项源自 `doctor` 检查与 catalog `security.requiredControls` 蒸馏（历史实现见归档，不再引用）；标准见 `knowledge/standards/agent-engineering-standard.md` §8、§13；playbook §5。
+参考：检查项蒸馏自项目安全门槛与 requiredControls 清单；标准见 `knowledge/standards/06-evals-and-quality.md`（§8）、`knowledge/standards/08-delivery-and-project-docs.md`（§13）；评审纪律见 `knowledge/practices/03-verification-and-safety.md`（§5）。完整加载清单见 [references.md](./references.md)。
 
 上游：`agent-eval` 报告汇入。发现回环到 `agent-scaffold` 或 `agent-design`（当设计本身必须变更时）。

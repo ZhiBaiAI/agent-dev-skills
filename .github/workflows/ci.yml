@@ -37,5 +37,14 @@ jobs:
             [ -f "$f" ] || { echo "dangling: $f"; failed=1; }
           done
           [ "$failed" -eq 0 ]
-      - name: knowledge index exists
-        run: test -f knowledge/index.yaml
+      - name: Each skill has a references.md load manifest
+        run: |
+          failed=0
+          for d in skills/*/; do
+            [ -f "$d/references.md" ] || { echo "missing: $d/references.md"; failed=1; }
+          done
+          [ "$failed" -eq 0 ]
+      - name: knowledge index and navigation page exist
+        run: |
+          test -f knowledge/index.yaml
+          test -f knowledge/README.md

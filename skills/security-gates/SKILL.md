@@ -55,6 +55,8 @@ description: Agent 项目的强制安全纪律。每当设计、选型、生成�
 
 ## 密钥与副作用（playbook §6）
 
+以下 `playbook` 的安全与部署部分见 `knowledge/practices/03-verification-and-safety.md`（§6）。
+
 - 密钥放在 env / 密钥存储里，绝不在 AGENTS.md、仓库、知识库或会话里。
 - 高风险动作（受保护分支 push、force-push、skip-check、类 drop 命令、生产数据写入）在执行前被机械拦截——“Agent 说它会小心”不是控制。
 - 有副作用的变更走 stage/apply，带绑定审批的 ID；环境跨回合变化时，不要基于过时前提重放。
@@ -66,6 +68,8 @@ description: Agent 项目的强制安全纪律。每当设计、选型、生成�
 - HTTP MCP：正确的 OAuth 流、校验 audience 的 token、**绝不透传 token**、token 不进 URL、只走 HTTPS。
 - 本地 MCP：展示完整命令并取得明确同意。
 - 把每个 MCP 服务器当作独立信任域；按任务/技能需要连接，而不是按默认；按 Agent 白名单服务器与工具；核算每次连接的 schema/结果注入成本；大结果溢出到工件存储。绝不为省成本绕过 MCP 的权限/审计。
+
+完整加载清单见 [references.md](./references.md)。
 
 反向引用：standard §10、§11；lessons §7；playbook §6；
 `knowledge/rules/architecture-guardrails.md`。

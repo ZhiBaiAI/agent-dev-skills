@@ -1,0 +1,156 @@
+# Agent 工程规范 · 状态、记忆与耐久执行
+
+> **范围：** §5 四类状态、Checkpoint 与 Store、可恢复 Workflow、执行账本、Working Memory、故障分级、知识资产与回流、Loop State、并发、Interrupt/Resume
+> 集合：`standards/` ｜ 导航：[知识库索引](../README.md)
+
+# 5. State、Session、Memory 与耐久执行
+
+## 5.1 区分四类状态
+
+| 概念 | 范围 | 用途 |
+|---|---|---|
+| Run State | 一次运行 | 当前步骤、预算、中断 |
+| Session History | 一个会话 | 消息连续性 |
+| Workflow Checkpoint | 一个流程实例 | 恢复、重放、人工暂停 |
+| Long-term Memory | 跨会话 | 用户偏好、已验证事实 |
+
+- **MUST NOT** 将四类状态混成一个 messages 数组。
+- **MUST NOT** 将业务事实只保存在框架内存中。
+- **MUST** 为长期 Memory 定义来源、有效期和删除机制。
+- **MUST** 区分模型推断与已验证事实。
+- **MUST** Memory 按恢复语义分类管理：工作状态可被新 checkpoint 取代、事件历史追加写、领域知识保留版本与来源、偏好需衰减纠错、凭据留在专用隐私边界——摘要适合压缩上下文，审计依赖原始记录；能无状态完成的任务保持短寿命，持久化本身引入隐私、腐化和迁移成本。
+- **MUST** 长期记忆定位为增强能力而非依赖路径：检索失败或超时返回空结果并记 warning，主对话流程继续执行，不阻塞主链路（并行加载时与短期上下文各自独立加载、join 汇合）。
+- **SHOULD** 长期记忆注入按 scope 分配 Token 预算（如画像类上限 60%、剩余给任务经验），截断按行进行以保留单条记忆完整语义，避免截断前的估算带入剩余预算计算。
+- **SHOULD** 记忆库结构约束导航复杂度：目录层级封顶（如两级，深层级让 AI 定位一条记忆的选择数随深度翻倍；内容增长用文件名前缀消化，不新增层级——想加层级往往是在逃避"这条记忆属于哪类"的判断）；索引先行（总索引 title+description 一行一条 + 目录 README 声明装什么/不装什么，AI 先扫地图再按需读正文）；跨目录主题用 tags 补维度而非目录反复细分；不确定的信息显式标注为"待补齐"而非缺失。
+- **MUST** 长任务 Goal 写明 outcome、constraints、verification（Goal 是可执行契约，不是"一直做下去直到完成"）；完成判定由测试、可测指标、Diff、截图、外部状态或人工验收等外部证据确认，**MUST NOT** 以模型自述"已完成"作为完成依据。
+- **MUST** 为持续运行定义明确终态（blocked / needs-input / cancelled / budget-exhausted）：verifier 不可达、预算耗尽、权限不足或外部依赖永久失败时进入终态——缺少停止证明和资源上限的 Goal 本质上是无限循环。
+- **MUST** 长任务可恢复性以换 Agent 为检验：假设每个阶段结束后换成全新 Agent，仅凭项目内状态、文档与真实工件（非会话历史）能继续推进——Workflow 各阶段规定交接合同（输入来自已确认事实或上一步产物、输出落到文档/代码现场/报告），不能只靠对话记忆；恢复任务（凭持久化信息重建上下文）优先于恢复会话（找回上一段对话）。
+- **SHOULD** Harness 组件含对当前模型能力的隐含判断，不是永久资产：新增（Add）与删减（Thin）都由真实任务的运行证据决定（重复失败、缺证据、无法恢复才加；长期无价值、重复实现、频繁误伤则删），只会增加不会减少的 Harness 最终变成新负担。
+
+## 5.2 Checkpoint 与 Store 分离
+
+区分线程级、短期、流程状态的 Checkpointer 与跨线程、长期、应用定义数据的 Store。
+
+## 5.3 可恢复 Workflow 规则
+
+耐久运行通过重放到 Checkpoint 恢复。
+
+- **MUST** 将非确定性操作和副作用封装为独立 Task。
+- **MUST** 保证 Task 输入输出可序列化。
+- **MUST** 让可重试 Task 幂等。
+- **MUST** 假设中断前的代码可能再次执行。
+- **MUST NOT** 在中断点之前执行无保护的外部副作用。
+
+## 5.4 执行账本与流式传输
+
+执行账本保存：Run 状态、Step 状态、Event 序列、Checkpoint、Tool 副作用记录、Approval、ArtifactRef、Budget。SSE/WebSocket/轮询负责传输事件，账本负责恢复、审计和状态查询。
+
+- **MUST** 将执行与客户端连接分离。
+- **MUST** 为事件分配单调序号和幂等标识。
+- **MUST** 支持客户端按 Cursor 续传事件。
+- **MUST** 在安全边界写入 Checkpoint。
+- **MUST** 将缓存视为性能层，将持久化账本作为恢复依据。
+
+## 5.5 Working Memory 与行为资产
+
+运行内信息：Pinned Objective、State、Insights（已验证发现）、Transcript。
+
+跨运行行为资产：Policy（人工审核）、Strategy（Eval/Shadow/回滚）、Action Chain（高频动作序列，按场景召回和版本化）。
+
+- **MUST** 标记 Insights 的来源和验证状态。
+- **MUST** 将 Policy、Strategy 和 Action Chain 保存为结构化资产。
+- **MUST NOT** 将敏感属性推断写入个人记忆。
+- **SHOULD** 会话记忆的写入走异步抽取器（会话后离线抽取），不放在对话热路径上同步生成；记忆写路径带验证（抽取结果过校验才入库），防止对话中的临时表述直接污染长期记忆（Anthropic 商务 Agent 记忆异步抽取模式）。
+
+## 5.6 故障分级与恢复策略
+
+| 级别 | 处理 | 示例 |
+|---|---|---|
+| RETRY | 当前步骤有界重试 | 超时、限流、暂时网络错误 |
+| FALLBACK | 切换替代 Tool/模型/策略 | Provider 异常、检索源不可用 |
+| ROLLBACK | 回到最近稳定 Checkpoint | Gate 失败、产物不合格 |
+| NEED_INPUT | 暂停并请求用户信息 | 关键需求缺失、业务取舍 |
+| ABORT | 终止并保留证据 | 权限失败、数据完整性风险 |
+
+- **MUST** 为每个错误码定义默认恢复级别。
+- **MUST** 限制重试次数、总时长和成本。
+- **MUST** 避免对确定性错误执行原样重试。
+- **MUST** 在回退前确认副作用状态。
+- **SHOULD** 把超时归类为"未知"而非"失败"：服务端可能已成功但客户端报错，超时类错误不自动重试——先用请求 ID 做状态查询确认副作用真实状态（成功/失败/在途），未知状态清空前禁止重复发起同 ID 的副作用调用（TikTok SRE：超时=未知，退款案例盲目重试=双倍退款）。
+- **SHOULD** 为外部依赖配置熔断器与扇出上限：下游持续失败时熔断阻止 Agent 继续调用（保护下游、防级联故障）；Agent 重试与并行调用设最大并行度，配合指数退避——幂等只防重复副作用，不防重试风暴（TikTok SRE 分布式系统模式）。
+
+## 5.7 知识资产分层
+
+| 类型 | 内容 | 主要治理 |
+|---|---|---|
+| Domain Knowledge | 业务事实、术语、指标、元数据、实体关系 | 来源、Owner、有效期、权限 |
+| Behavior Spec | Agent 与交付物的行为和质量规则 | Rule ID、版本、Gate、Eval |
+| Workflow Config | 阶段、状态、路由、重试、审批和恢复 | 依赖检查、发布、回滚 |
+| Skill / Capability | 可执行能力及资源 | 版本、权限、Contract |
+| Experience | 经真实运行验证的行动方法 | 证据、范围、衰减、回滚 |
+
+- **MUST** 分别版本化 Domain Knowledge、Behavior Spec 和 Workflow Config。
+- **MUST** 区分事实、规则、流程和经验。
+- **MUST NOT** 将行为规则存入领域事实库。
+- **MUST NOT** 将工作流顺序仅写入 Prompt。
+
+## 5.8 知识冷启动
+
+流程：代码/Schema/文档/历史 SQL/接口/评审记录 → 自动抽取候选 → 去重与冲突检测 → 来源绑定 → 领域审核 → Eval → 发布。
+
+- **MUST** 将自动抽取结果标记为 CANDIDATE。
+- **MUST** 对公式、权限、业务口径和隐含条件进行人工审核。
+- **MUST NOT** 因抽取置信度高自动发布关键业务事实。
+
+## 5.9 知识持续回流
+
+回流来源：用户纠正、Gate 失败、代码评审、真实环境验证、生产 Incident、冒烟与回归 Eval、Tool 与 Schema 变更。
+
+- **MUST** 将纠正记录为候选变更。
+- **MUST** 区分领域事实错误、行为规则缺失和工作流配置错误。
+- **MUST** 为知识变更新增或更新回归 Eval。
+- **MUST NOT** 将用户单次表述直接覆盖共享知识。
+
+## 5.10 知识过时与冲突治理
+
+知识条目应包含：Owner、来源、有效时间、最后验证时间、消费次数、失败关联次数、依赖资产、替代条目。
+
+触发重新验证：来源变化、Tool/Schema/接口升级、关联任务连续失败、多来源冲突、超期、长期未使用但仍 Active。
+
+- **MUST** 在冲突未解决时向运行时返回冲突状态。
+- **MUST** 阻止高风险任务使用 SUSPECT 知识。
+- **MUST** 记录采用哪一版本知识生成了结果。
+
+## 5.11 Loop State
+
+- **MUST** 将发现 Cursor、去重键、工作项状态和验证证据持久化。
+- **MUST** 使用 Claim Lease 防止多个 Worker 重复处理同一工作项。
+- **MUST** 支持崩溃恢复、Lease 过期回收和幂等重放。
+
+## 5.12 Thread 与 Run 并发
+
+策略：QUEUE（顺序）、REJECT（冲突）、CANCEL_PREVIOUS、FORK（分叉并行）、OPTIMISTIC（乐观锁）。
+
+- **MUST** 在创建 Run 时返回排队、冲突、取消或分叉结果。
+- **MUST** 让消息、Event、Artifact、Workspace 和副作用归属具体 Run。
+- **MUST** 防止并发 Run 写入同名 Artifact 或同一外部资源。
+
+## 5.13 Checkpoint Schema 演进
+
+- **MUST** 为 Checkpoint 保存 Schema 和 Runtime 版本。
+- **MUST** 为可恢复版本提供迁移函数。
+- **MUST** 定义兼容窗口和历史恢复期限。
+- **MUST NOT** 静默丢弃旧字段或待处理副作用。
+
+## 5.14 Interrupt 与 Resume
+
+- **MUST** 在中断前持久化 Checkpoint。
+- **MUST** 对中断载荷和恢复输入使用 Schema。
+- **MUST** 校验恢复者身份、权限、状态版本和过期时间。
+- **MUST** 保证重复 Resume 不造成重复副作用。
+- **MUST** 在恢复后重新执行适用 Guardrail。
+- **MUST NOT** 依赖进程内同步等待实现长时间审批。
+- **MUST** 持久化 Goal 状态与进程内激活状态分离：进程重启后持久 active 的 Goal 默认不自动唤醒（需显式重新激活），防止恢复瞬间唤醒全部历史任务；Round 超限、max-tokens、Agent 错误等异常一律先去激活，状态说不清时先停止而非盲目重试。
+- **MUST NOT** 解析并执行因 token 上限被截断的响应中的工具调用——半截 JSON 即使被解析器补全、schema 校验通过，参数语义也可能已经改变（写操作副作用落地后不可收回）；应终止本轮交上层决定，或以错误结果交回模型重新发起调用。
+
+---

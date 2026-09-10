@@ -35,7 +35,7 @@ description: 为新的 Agent 做设计对话。用于从一个想法或粗略需
 
 ## 设计阶段原则（standard §1、§2；playbook §1-2）
 
-在敲定设计之前，先以这些事实为对话锚点：
+在敲定设计之前，先以这些事实为对话锚点（`playbook` 见 `knowledge/practices/01-mindset-and-collaboration.md` 与 `02-harness-and-knowledge.md`）：
 
 - **三段模型**（playbook §1）：`业务研发 Agent = Model + 通用 Coding Agent Harness + 项目 Harness`。Model 与通用 harness 在本质上是商品；项目 harness（业务知识、流程约束、完成标准）才是团队真正拥有的东西。设计应当瞄准 harness 层，而不是重新发明通用 harness。
 - **瓶颈是上下文，不是模型能力。**一个 Agent 在具体项目里能走多远，取决于上下文质量。要设计上下文装载，而不仅仅是设计 Agent。
@@ -86,4 +86,4 @@ description: 为新的 Agent 做设计对话。用于从一个想法或粗略需
 反向引用：standard §1、§2、§6.5、§12.2；playbook §1-2；
 `knowledge/practices/agent-design-workflow.md`。
 
-下游：`agent-stack`（基于此设计做技术选型）→ `agent-scaffold`（生成）。
+下游：`agent-stack`（基于此设计做技术选型）→ `agent-scaffold`（生成）。完整加载清单见 [references.md](./references.md)。
