@@ -1,0 +1,4 @@
+interface:
+  display_name: "Complexity Ladder"
+  short_description: "Agent 架构复杂度阶梯纪律：每升一级都需要明确的理由"
+  default_prompt: "Use $complexity-ladder to justify or reject a step up in architecture complexity."

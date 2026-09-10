@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-skills:
+    # 结构校验：SKILL.md 存在、frontmatter 含 name/description、
+    # 技能对 knowledge/ 的引用不悬空。纯内容仓库，无需构建。
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Each skill has a SKILL.md
+        run: |
+          failed=0
+          for d in skills/*/; do
+            [ -f "$d/SKILL.md" ] || { echo "missing: $d/SKILL.md"; failed=1; }
+          done
+          [ "$failed" -eq 0 ]
+      - name: Each SKILL.md has name/description frontmatter
+        run: |
+          failed=0
+          for f in skills/*/SKILL.md; do
+            grep -q '^name:' "$f" || { echo "no name: $f"; failed=1; }
+            grep -q '^description:' "$f" || { echo "no description: $f"; failed=1; }
+          done
+          [ "$failed" -eq 0 ]
+      - name: knowledge/ references resolve
+        run: |
+          failed=0
+          for f in $(grep -rho 'knowledge/[a-zA-Z0-9/._-]*' skills/ | sort -u); do
+            [ -f "$f" ] || { echo "dangling: $f"; failed=1; }
+          done
+          [ "$failed" -eq 0 ]
+      - name: knowledge index exists
+        run: test -f knowledge/index.yaml

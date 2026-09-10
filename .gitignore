@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies (if you run local tooling)
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log

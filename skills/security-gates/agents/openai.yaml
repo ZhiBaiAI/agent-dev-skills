@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Gates"
+  short_description: "浏览器/Shell/MCP/凭证等能力触发的强制安全控制纪律"
+  default_prompt: "Use $security-gates to classify this capability and enforce its required controls."

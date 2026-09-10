@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Stack"
+  short_description: "按能力槽位做技术选型，记录理由、触发条件与被拒替代项"
+  default_prompt: "Use $agent-stack to select technology for my accepted agent design."

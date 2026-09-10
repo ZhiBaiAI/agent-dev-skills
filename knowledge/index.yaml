@@ -1,0 +1,58 @@
+version: "1.0"
+purpose: "Shared, versioned design knowledge for Agent Starter designers and the agent-starter-design Skill."
+loading:
+  - "Read only entries whose triggers match a confirmed requirement or an unresolved architecture decision."
+  - "External materials are linked and summarized; organization-specific conclusions belong in practices and rules."
+entries:
+  - id: design-conversation
+    version: "1"
+    title: "Progressive Agent design workflow"
+    path: practices/agent-design-workflow.md
+    level: L2
+    authority: advisory
+    triggers: ["new-agent", "requirements", "architecture", "technology-selection"]
+    summary: "Clarify high-impact requirements one at a time before writing an Intent."
+  - id: architecture-guardrails
+    version: "1"
+    title: "Architecture and security guardrails"
+    path: rules/architecture-guardrails.md
+    level: L3
+    authority: enforced
+    enforcedBy:
+      - "skills/security-gates/SKILL.md#required-controls"
+      - "skills/complexity-ladder/SKILL.md#when-each-rung-is-warranted"
+      - "skills/agent-design/SKILL.md#discipline"
+    triggers: ["browser", "shell", "filesystem", "external-api", "credentials", "mcp", "database", "queue", "multi-agent", "rag", "durable-workflow"]
+    summary: "Requirements that must remain explicit and are validated by deterministic project controls."
+  - id: engineering-standard
+    version: "1.0"
+    title: "Agent engineering standard"
+    path: standards/agent-engineering-standard.md
+    level: L2-L3
+    authority: advisory
+    triggers: ["security", "evaluation", "observability", "production", "governance"]
+    summary: "Long-form engineering reference; load only the relevant section."
+  - id: technical-selection-guide
+    version: "1"
+    title: "Technical selection guide"
+    path: selection/tech-selection-guide.md
+    level: L0-reference
+    authority: advisory
+    triggers: ["technology-selection", "runtime", "framework", "harness"]
+    summary: "External and public selection concepts; use for comparison, not as a mandatory rule source."
+  - id: development-lessons
+    version: "1"
+    title: "Agent development lessons"
+    path: cases/agent-development-lessons.md
+    level: L0-reference
+    authority: advisory
+    triggers: ["prompt", "context", "tools", "evaluation", "observability"]
+    summary: "Source-linked cases used to identify risks and test scenarios."
+  - id: ai-native-dev-playbook
+    version: "1"
+    title: "AI-native development playbook (vibe coding)"
+    path: practices/ai-native-dev-playbook.md
+    level: L2
+    authority: advisory
+    triggers: ["ai-assisted-dev", "coding-agent", "daily-development", "code-review", "project-harness"]
+    summary: "How the team uses AI coding agents day-to-day: collaboration paradigm, project harness, knowledge base, verification, and deployment gates."

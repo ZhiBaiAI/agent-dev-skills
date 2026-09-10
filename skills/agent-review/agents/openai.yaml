@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Review"
+  short_description: "上线前审查：安全、架构漂移、契约一致性、成本，产出 MUST/SHOULD 报告"
+  default_prompt: "Use $agent-review to review my agent change for delivery readiness."

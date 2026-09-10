@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Scaffold"
+  short_description: "官方 CLI 建骨架 + 增量接线生成 + 验证门通过才交付"
+  default_prompt: "Use $agent-scaffold to generate my agent project from the design and stack decisions."

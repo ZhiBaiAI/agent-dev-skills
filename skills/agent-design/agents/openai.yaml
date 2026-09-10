@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Design"
+  short_description: "从想法出发的设计对话，产出经评审的 agent.design.md"
+  default_prompt: "Use $agent-design to clarify my agent idea and produce a reviewed design."

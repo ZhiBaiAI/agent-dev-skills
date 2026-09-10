@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Eval"
+  short_description: "为 agent 行为设计评测套件并纳入验证门"
+  default_prompt: "Use $agent-eval to design evaluation suites for my agent."
