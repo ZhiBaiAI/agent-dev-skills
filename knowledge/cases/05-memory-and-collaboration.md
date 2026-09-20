@@ -74,7 +74,7 @@
 
 ### 10.4 SPEC.md 即监督者——Linear 看板变成 agent 控制平面
 
-- **来源：** [OpenAI — Symphony: composition as orchestration](https://openai.com/index/symphony/) ｜ 2026-04-27
+- **来源：** [OpenAI — An open-source spec for Codex orchestration: Symphony（原 Symphony: composition as orchestration，已迁站）](https://openai.com/index/open-source-codex-orchestration-symphony) ｜ 2026-04-27
 - **问题：** 多 agent 并行开发时，传统编排方案（中央调度器、消息总线）需要额外基础设施且易成单点。
 - **原因：** 复杂的编排代码本身引入新的失败面。
 - **解决方法：** OpenAI 内部产品 Symphony 用 Linear 看板作控制平面：每个 open task 自动配一个 agent，崩溃自动重启；整个"编排系统"就是一份 spec 文档（含 Linear MCP 工具使用说明）让 agent 自己实现。配合 `request_changes` 门禁（分派新任务前必须先处理已有 review 意见）防 agent 堆积任务。结果：部分团队 landed PR 增 500%。

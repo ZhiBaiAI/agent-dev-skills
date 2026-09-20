@@ -57,7 +57,7 @@
 
 ### 7.8 企业级 agent 安全部署——审批自动化 + AI 分诊安全日志
 
-- **来源：** [OpenAI — Running Codex safely at OpenAI](https://openai.com/index/running-codex-safely-at-openai/) ｜ 2026
+- **来源：** [OpenAI — Running Codex safely at OpenAI（已迁至 /index/running-codex-safely）](https://openai.com/index/running-codex-safely) ｜ 2026
 - **问题：** 内部大规模放开 Codex 后，人工逐条审批既拖慢开发又造成审批疲劳（见 7.5），安全事件又需要分钟级响应。
 - **原因：** 传统"人工审批 + 事后审计"的节奏与 agent 开发速度不匹配。
 - **解决方法：** ① **managed network policy**：预期域自动放行，陌生域需申请审批（默认拒绝）；② **auto-review 子 agent** 自动审查并批准低风险动作，人只审真正需要判断的；③ **OTel agent-native 日志** + AI 安全分诊 agent 读日志解释"agent 为什么这么做"，把安全响应从翻日志升级为读分析。
