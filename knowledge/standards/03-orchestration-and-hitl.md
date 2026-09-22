@@ -168,6 +168,8 @@
 
 默认需要审批：发送外部邮件或消息、删除或覆盖用户数据、创建订单/付款/提交合同、修改权限/凭证/安全配置、执行高风险 Shell、安装未知 MCP Server 或 Skill、将敏感数据发送到新域名或新 Provider、批量写入外部系统。
 
+- **MUST** 权限按风险分级一层一层放，不一步到位：第一级只读（允许总结和分类）→ 第二级可生成 patch 或 PR 但不可合并 → 第三级可执行外部动作但关键步骤需人批准 → 第四级才对低风险、可回滚、验证强的任务自主。大多数团队不该从第四级开始——前两级做扎实，失败代价是一个待审 patch 而非一次生产事故。
+
 ## 6.2 审批请求规范
 
 审批请求必须包含：id、runId、actionType、toolName、riskLevel、summary、exactEffect、affectedResources、proposedInput、expiresAt、version。

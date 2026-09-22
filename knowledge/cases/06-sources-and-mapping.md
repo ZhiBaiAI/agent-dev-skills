@@ -86,6 +86,13 @@
 | 66 | Anthropic | Agentic coding is straining CI. Here's how we scaled test impact analysis at Anthropic（补丁续命 70 天/29 天/1 天 vs 重设计三周一季 + 单写者进程内状态是水平分片根因 + listener 滞后让 selector 用过期数据决策 + 指标做 agent 的眼睛与耳朵） | 2026-09-14 | https://claude.com/blog/agentic-coding-is-straining-ci-heres-how-we-scaled-test-impact-analysis-at-anthropic |
 | 67 | Anthropic（Frontier Red Team） | Patterns and problems in multiagent systems（协调 swarm 27M token/266 漏洞 vs 独立并行 6.5M/21，仅 12 个重叠 + 角色/CEO 提示词干预无效 + 协调能力随模型代际变化 + 低方差一致性失败） | 2026-08-13（8-27 更新） | https://www.anthropic.com/research/multiagent-systems |
 | 68 | Anthropic | Reducing cost and improving performance with Claude Platform（缓存命中率是架构属性不是调优参数 + 降本三手段：最大化缓存命中/升级时清提示反模式/按任务校准 effort） | 2026-09-08 | https://claude.com/blog/reducing-cost-and-improving-performance-with-claude-platform |
+| 69 | 大淘宝技术 | Loop engineering：把 agent 放进工程循环（六组件控制面 + 五种死法 + 验证结构化 + 权限四级梯 + 预算上限 + 产物可沉淀准入） | 2026-09-21 | https://mp.weixin.qq.com/s/RxRzTsRvmZJMmtQjQM79_g |
+| 70 | Addy Osmani | Loop Engineering（工程师从操作者变为循环机制设计者；前馈约束与后馈传感器） | 2026-06-07 | https://addyosmani.com/blog/loop-engineering/ |
+| 71 | Birgitta Böckeler（Thoughtworks） | Harness engineering for coding agent users（只有调度没有控制件是定时犯错） | 2026-04-02 | https://martinfowler.com/articles/harness-engineering.html |
+| 72 | Eric Carlson（Amplitude） | What I Learned Pointing a Ralph Loop at My Product for a Week（agent 自埋点做下轮验证 + 每 PR 附浏览器录制作证据） | 2026-05-13 | https://amplitude.com/blog/ralph-loop |
+| 73 | Geambasu et al.（arXiv） | Engineering Robustness into Personal Agents with the AI Workflow Store（可靠流程沉淀为可复用受约束工作流，而非每次临场发挥） | 2026-05-11（v3 2026-06-10） | https://arxiv.org/abs/2605.10907 |
+| 74 | Xin et al.（arXiv） | EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery（权限、产物、预算与 HITL 是环境工程不是配套设施——有边界执行与隔离评估下 agent 表现判若两人） | 2026-06-11 | https://arxiv.org/abs/2606.13662 |
+| 75 | 介错者 | 重读《人月神话》：在所有人都有 Agent 之后（组织是人的 Harness；补丁堆进 Agent 让错误边界维持更久；共同任务书六问；按用户可见结果验收；只奖励好消息让 Agent 漏掉坏消息） | 2026-08-31 | https://mp.weixin.qq.com/s/P-rDy0BpW1le5Mn6IpCTdQ |
 
 ---
 
@@ -194,3 +201,5 @@
 | 协调能力随模型代际变化（老模型冲突后放弃、中间代际各占文件、最新代际高共享高吞吐） | §9.4 模型与运行时升级 |
 | 低方差一致性失败（同源同上下文 agent 互相审查不构成交叉验证） | §3.9 协调者与专家模式、§7.4 证据化置信度 |
 | 缓存命中率是架构属性（前缀字节级稳定 + 波动值外置 + 命中率可诊断对账） | §2.10 上下文成本与稳定前缀、§9.6 成本可观测 |
+| Loop 六组件与五种死法（可靠性来自控制面 + 验证结果结构化 + 状态文件必须被读 + 权限四级梯 + 预算上限 + 产物可沉淀准入 + harness 自维护 loop） | §1.6 Loop 规则、§5.11 Loop State、§7.6 分层验证、§6.1 审批 |
+| 组织是人的 Harness（规则与补丁归资源拥有方 + 共同任务书六问 + 按用户可见结果验收 + 坏消息必须能上报） | §5.7 知识资产分层、§2.8 阶段上下文包与交接产物、§7.4 证据化置信度 |
