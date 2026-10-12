@@ -93,6 +93,7 @@
 | 73 | Geambasu et al.（arXiv） | Engineering Robustness into Personal Agents with the AI Workflow Store（可靠流程沉淀为可复用受约束工作流，而非每次临场发挥） | 2026-05-11（v3 2026-06-10） | https://arxiv.org/abs/2605.10907 |
 | 74 | Xin et al.（arXiv） | EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery（权限、产物、预算与 HITL 是环境工程不是配套设施——有边界执行与隔离评估下 agent 表现判若两人） | 2026-06-11 | https://arxiv.org/abs/2606.13662 |
 | 75 | 介错者 | 重读《人月神话》：在所有人都有 Agent 之后（组织是人的 Harness；补丁堆进 Agent 让错误边界维持更久；共同任务书六问；按用户可见结果验收；只奖励好消息让 Agent 漏掉坏消息） | 2026-08-31 | https://mp.weixin.qq.com/s/P-rDy0BpW1le5Mn6IpCTdQ |
+| 76 | 盈衣（淘天集团-交易数据技术） | 淘宝AI购物助手在线评测落地实践（四层数据清洗 + 跨轮信息隔离 + CTX 诚实跳过 + 四层归因 + 指标拆分子分母 + 样本量按 CI 反推） | 2026-10-12 | https://mp.weixin.qq.com/s/blMjReLQZUuSK6bl6Bt3yA |
 
 ---
 
@@ -203,3 +204,4 @@
 | 缓存命中率是架构属性（前缀字节级稳定 + 波动值外置 + 命中率可诊断对账） | §2.10 上下文成本与稳定前缀、§9.6 成本可观测 |
 | Loop 六组件与五种死法（可靠性来自控制面 + 验证结果结构化 + 状态文件必须被读 + 权限四级梯 + 预算上限 + 产物可沉淀准入 + harness 自维护 loop） | §1.6 Loop 规则、§5.11 Loop State、§7.6 分层验证、§6.1 审批 |
 | 组织是人的 Harness（规则与补丁归资源拥有方 + 共同任务书六问 + 按用户可见结果验收 + 坏消息必须能上报） | §5.7 知识资产分层、§2.8 阶段上下文包与交接产物、§7.4 证据化置信度 |
+| 评委可信度瓶颈在输入（四层数据清洗 + 跨轮按轮投喂 + 诚实跳过 N/A + 四层归因 + 指标先拆分子分母 + 样本量按 CI 反推） | §7.1 Eval 开发要求、§7.7 评测 Harness、§7.10 Online/Offline 飞轮 |

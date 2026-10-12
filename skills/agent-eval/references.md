@@ -8,6 +8,7 @@
 | 生产指标 | `knowledge/standards/06-evals-and-quality.md`（§8.1-8.2） | 三层指标、Task Success、Quality Floor |
 | 成本指标 | `knowledge/standards/06-evals-and-quality.md`（§7.8-7.9） | 成本归因、模型分层路由 |
 | 机评工程 | `knowledge/cases/03-evals-and-quality.md`（§5） | LLM-as-Judge 校准、rubric 案例 |
+| 评委输入质量 | `knowledge/standards/06-evals-and-quality.md`（§7.1.1） | 机评输入四层清洗、按轮投喂、诚实跳过 N/A、评测异常四层归因 |
 | 防自我欺骗 | `knowledge/practices/03-verification-and-safety.md`（§5） | 评测集冻结、对冲指标、目标人复核 |
 | 自助评测 harness | `knowledge/standards/06-evals-and-quality.md`（§7.7） | 用强 Agent 搭评测 harness |
 | 反例与回归来源 | `knowledge/cases/03-evals-and-quality.md`（§5、§6） | 生产质量案例 |
