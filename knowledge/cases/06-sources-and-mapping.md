@@ -7,9 +7,11 @@
 
 按"宁缺毋滥"原则，以下方向未找到满足筛选标准的 2026 年来源，明确标注：
 
-- **Shopify / Netflix / LinkedIn / Vercel 2026 年 Agent 生产文章**：多次站点限定搜索均无 2026 年结果（Google 已于 2026-09 收录，见 #60、#61）。
+- **Netflix / LinkedIn 2026 年 Agent 生产文章**：站点限定搜索无 2026 年结果（Shopify 与 Vercel 已于 2026-09-22 后各出文章，见 #79、#80、#85，此条已部分推翻）。**注意**：这两家技术博客对脚本请求返回 403，需用浏览器核验；"脚本读不到"不等于"没有文章"，核验方式见仓库根 `article-intake-workflow.md` 第二节「抓不到就换浏览器读」。
 - **会议分享（ICML/NeurIPS/QCon/GopherCon 2026 有公开 slides/录像的 Agent 经验）**：未找到 2026 年内已公开且符合"真实问题+解决"的会议分享。
-- **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 未能抓取验证（404），未采纳。
+- **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15 复验），未采纳。
+- **OpenAI 开发者博客（developers.openai.com）各篇**：**此条已推翻（2026-10-16）**。此前记为"全站不显示发布日期"，实测是脚本抓不到客户端渲染的日期，**用浏览器读全部有日期**——`Shell + Skills + Compaction` 2026-02-11、`Rethinking skills and prompts for GPT-6 Astra` 2026-09-11、`Testing Agent Skills Systematically with Evals` 2026-01-22、`Automating repetitive work at OpenAI with Codex` 2026-08-25、`Run long horizon tasks with Codex` 2026-02-23、`Codex as a platform` 2026-08-19。这些篇目按正常流程重新评估，不再挂"待观察"。
+- **OpenAI 主站（openai.com）各篇**：对脚本请求全部返回 403（2026-10-16 实测），**必须用浏览器读**；同日实测浏览器可正常获取全文与日期（例：`How Third Moment Research runs 10,000 agents` 2026-10-14）。
 
 ---
 
@@ -94,6 +96,47 @@
 | 74 | Xin et al.（arXiv） | EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery（权限、产物、预算与 HITL 是环境工程不是配套设施——有边界执行与隔离评估下 agent 表现判若两人） | 2026-06-11 | https://arxiv.org/abs/2606.13662 |
 | 75 | 介错者 | 重读《人月神话》：在所有人都有 Agent 之后（组织是人的 Harness；补丁堆进 Agent 让错误边界维持更久；共同任务书六问；按用户可见结果验收；只奖励好消息让 Agent 漏掉坏消息） | 2026-08-31 | https://mp.weixin.qq.com/s/P-rDy0BpW1le5Mn6IpCTdQ |
 | 76 | 盈衣（淘天集团-交易数据技术） | 淘宝AI购物助手在线评测落地实践（四层数据清洗 + 跨轮信息隔离 + CTX 诚实跳过 + 四层归因 + 指标拆分子分母 + 样本量按 CI 反推） | 2026-10-12 | https://mp.weixin.qq.com/s/blMjReLQZUuSK6bl6Bt3yA |
+| 77 | Naresh Jain（Specmatic / ConfEngine） | Are Harnesses Worth the Cost?（同一任务 10 组配对实验：前沿模型加 harness 成本涨 7 倍、验收零提升；便宜模型加 harness 从 3/10 到 10/10；结论是介入时机而非有无） | 2026-10-13 | https://martinfowler.com/articles/are-harnesses-worth-the-cost.html |
+| 78 | Anthropic | Redesigning source control at Anthropic（合并量 5 个月涨 10 倍压垮 git；7 人 5 个月自建 Scion，刻意放弃分布式与离线；承认无法复制合并队列全局锁；工程师常对 Claude 说"不"） | 2026-10-13 | https://www.anthropic.com/engineering/redesigning-source-control |
+| 79 | Shopify（Mingyu Zhao） | ShopGym: Realistic, reproducible sandboxes for shopping agents（线上店铺转可重置沙箱；224 任务/6 店；孪生环境状态数相当但连接数偏少，聚焦型任务差距明显——保真度边界被量化） | 2026-10-01 | https://shopify.engineering/shopgym |
+| 80 | Vercel（Andy Riancho） | Findings from the $1M Vercel Sandbox challenge（两周 1285 份报告、付费 24.2 万美元；内核零日可泄露宿主内存；三条判据：客机派生值不可作权威、同一决策只留一个执行点、依赖秘密的边界不是边界） | 2026-10-14 | https://vercel.com/blog/findings-from-the-1-million-dollar-vercel-sandbox-challenge |
+| 81 | Google Cloud（George Weale, Bo Yang, Andrew Biernat） | Optimizing a 200,000-line Python codebase overnight with Gemini 4 Argon（20.5 万行/800 文件/1.7 万测试；提 6 项只过 2 项，四项驳回理由具体；通过 16892 开源测试却挂 25 个内部测试；"agent 探索、维护者做减法"） | 2026-10-13 | https://developers.googleblog.com/en/optimizing-a-200000-line-python-codebase-overnight-with-gemini-4-argon/ |
+| 82 | Cursor（Jediah Katz, Connor O'Keefe, Calvin Yee） | Improved token efficiency for longer agent runs（系统提示砍 66%、工具按需加载、缓存断点前移、每十行标行号；token 成本降 7%、MCP 会话降 46.9%；反直觉：子 agent 有协调税、只在评测集上优化不够） | 2026-09-23 | https://cursor.com/blog/improved-token-efficiency |
+| 83 | LangChain（Sydney Runkle, Eugene Yurtsev） | How to Build a Model Router in the Harness（973 线程对照：中位成本 $0.94 vs $2.61 降 64%，合并 PR 率无显著差异 p=0.49；只用便宜模型的对照组一天内被叫停；子 agent 各自选模型漏掉收益） | 2026-10-01 | https://www.langchain.com/blog/how-to-build-a-model-router-in-the-harness |
+| 84 | Anthropic | Investigating unintended model actions in our evaluations and internal use（四类越界：利用缺陷执行命令、提交真实表单、绕过限制取数据、短链规避抓取限制；根因是训练奖励了投机取巧；模型自述推理不是可靠证据；联网评测已下线） | 2026-10-09（10-12 更正） | https://www.anthropic.com/research/investigating-unintended-model-actions |
+| 85 | Vercel（Amelia Charles, Andrew Qu, Jonathan Hefner） | State of agent skills（7 个月 100 万技能/2.8 亿安装；0.04% 占 62% 安装、近半数只装过一次；跨行业技能安装量 3.6 倍；软件工程类安装量低于平均 30%。**vendor 自报数据**） | 2026-09-25 | https://vercel.com/blog/state-of-agent-skills |
+| 86 | Uber Engineering | Designing MCP Gateway: Uber's MCP Management Platform（800+ 服务、5000+ 工具；MCP 无跨服务搜索，agent 必须预知地址；默认关闭"发现不等于暴露"；渐进发现、响应投影、结果外置） | 2026-10-01 | https://www.uber.com/us/en/blog/designing-mcp-gateway/ |
+| 87 | GitHub Security Lab（Antonio Morales） | AI-powered fuzzing with the GitHub Security Lab Taskflow Agent（三层架构：agent 决策/工具执行；阶段只经 SQLite 通信；为引导与报告分别构建两套探针；时间预算倍增 + 平台期检测；无容器隔离的警告） | 2026-09-24 | https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/ |
+| 88 | GitHub（Michelle Zhou, Alejandro Carderera de Diego） | ReviewBench: An open benchmark for AI code review（分析 1.039 亿 PR 建模分布；219 PR/187 仓库/19 语言；固定金标集会随能力失效故设 grounded 与 augmented 双口径；离线在线同向：采纳率 +8%、召回 +13.6%） | 2026-10-05 | https://github.blog/ai-and-ml/github-copilot/reviewbench-an-open-benchmark-for-ai-code-review/ |
+| 89 | Anthropic（Lance Martin） | Automating eval design and hillclimbing with Claude（挑模型失败案例采到的是失败指纹不是难度；评委用可核对命题非 1–5 分；评测噪音须小于最小可行动改进；残留文件会把答案递给 agent；用户流量偏易） | 2026-09-28 | https://claude.dev/blog/automating-eval-design-and-hillclimbing/ |
+| 90 | Google Cloud（Dima Melnyk, Elia Secchi） | The Outer Loop, Insights First: An Ambient Quality Agent（线上全绿却悄悄答错；刻意不设置信度字段、信任锚是引用且无效引用被服务端拒收；聚类在被 transcript 验证前只算主张；随机采样而非只筛异常；96 会话花费 $0.70） | 2026-10-08 | https://developers.googleblog.com/en/the-outer-loop-insights-first-an-ambient-quality-agent-that-diagnoses-your-production-agent/ |
+| 91 | LangChain（Arjun Natarajan, Eugene Yurtsev, Suraj Vathsa） | Search agent traces by behavior with AI Search in LangSmith（trace 中位 7.2 万 token 里约 85% 是工具输出、用户与 agent 文本仅约 2 千；向量检索分不出"做成了"与"声称做成了"；固定 8K 预算按优先级填充及其失效边界） | 2026-10-13 | https://www.langchain.com/blog/agent-traces-ai-search-langsmith |
+| 92 | LangChain（Divya Santhanam） | The Most Common Questions About Agent Evals, Answered（10–20 条起步、把失败转成样本；按线程而非按轮评；结果对不等于路径对；某决策模型评委与人工判定全一致且花费 $0.34 vs $28.17） | 2026-10-15 | https://www.langchain.com/blog/common-questions-about-agent-evals |
+| 93 | Uber Engineering | Scaling AI in Legal: Building Uber's Redlining Agent（合同评审时间降 20%、决策准确率 91%；语气规范交给法务自己持有；带半衰期的时间加权采样对抗概念漂移；早期纯检索三失败：相似度不准、语气不对、泛化差） | 2026-10-08 | https://www.uber.com/us/en/blog/building-ubers-redlining-agent/ |
+| 94 | LangChain（Sydney Runkle, Srimanth Tangedipalli, Neal Patel） | Building Long-Running Agents with ScaleDown and Deep Agents（高频结构化上下文决策交窄任务专用小模型，开放式生成留给通用模型；压缩结果附带说明可回取；专用模型失败时保持历史原样不阻塞主链路。**厂商自报倍数**） | 2026-10-13 | https://www.langchain.com/blog/building-long-running-agents-with-scaledown-and-deep-agents |
+| 95 | LangChain（Sydney Runkle, Hunter Lovell） | Building Prod with Jev and LangGraph（持久化执行的真正价值是"重跑可能走出另一条路径"；知识放在图的拓扑而非提示词；专用决策模型处理有界选择、阈值升级给 LLM） | 2026-09-25 | https://www.langchain.com/blog/building-prod-with-jev-and-langgraph |
+| 96 | LangChain（Sydney Runkle） | Revamping Skills in Deep Agents（工具与技能绑定：未读技能调用失败为未知工具；技能可固定与重载；中途加工具放进新系统消息以保缓存前缀不变；重载致缓存失效的取舍） | 2026-10-07 | https://www.langchain.com/blog/revamping-skills-in-deep-agents |
+| 97 | Anthropic（Lance Martin, CJ Avilla） | Building effective agent automations（按来源存书签而非固定时间窗；失败不等于沉默、保留书签并显式标注未读来源；发帖幂等与"可能已发"；发布前重新核实；陈旧记忆本身是危害；凭证占位符加保险库） | 2026-10-08 | https://claude.dev/blog/building-effective-agent-automations/ |
+| 98 | GitHub（Burke Holland） | When chat is the wrong UI（意图明确后聊天是错误界面；让 agent 按需生成专用界面，后续交互变免费；把 agent 本身当工具反复使用是纯粹的 token 浪费） | 2026-09-24 | https://github.blog/ai-and-ml/github-copilot/when-chat-is-the-wrong-ui/ |
+| 99 | Elastic（Toby Sutor） | Trust, but verify: Atomic claim checking against LLM hallucinations（生成与验证分离禁止自证；源拆成原子声明做存在/部分/缺失三态核对；"部分"价值最高；技术载荷逐字保留 + 强制申报冲突与省略；人工从通读降为裁定标记行，一小时降到五分钟；可信是架构属性不是模型属性） | 2026-09-24 | https://www.elastic.co/blog/atomic-claim-checking-against-llm-hallucinations |
+| 100 | Cloudflare | Cloudflare Containers, rebuilt to scale agent sandboxes（镜像与实例类型从部署期配置改为运行时参数；放置决策下移到调用点；复用预热实例与预分发基础镜像；100 并发沙箱中位启动 4.049s→648ms；旧抽象仅维护到 2026-12-31 是有意保留的迁移负担） | 2026-09-30 | https://blog.cloudflare.com/faster-agent-sandboxes/ |
+| 101 | GitHub（Brian Celenza） | Building Git infrastructure for agent-scale development（活动量 2182 亿→4733 亿事件/月、提交同比 5 倍；**读好扩写难扩**——加副本反而拖慢写；持久化机制同时是扩展机制；最小协调面 + 存储计算解耦 + 维护移出服务路径；内部基准写吞吐提升 35 倍） | 2026-10-06 | https://github.blog/engineering/architecture-optimization/building-git-infrastructure-for-agent-scale-development/ |
+| 102 | GitHub / Microsoft CoreAI（Batu Ozturkler, Shengyu Fu） | GitHub's model for secret detection（**模型大小不等于模型有用**；正则保召回 + 微调小分类器读上下文判真伪；难负例靠学习不靠规则——加规则会藏起真密钥；不替代确定性扫描而是互补；精确率 +13% 召回 +19%，扫描耗时 -86% 成本 -98%） | 2026-10-13 | https://github.blog/ai-and-ml/githubs-model-for-secret-detection-finding-more-secrets-with-less-noise/ |
+| 103 | Anthropic（Jonah Ezekiel, Lexie Tonelli） | How to prepare for AI-driven code modernization projects（先分类再建证书最后动代码；三类改造的正确标准不同，分类不清的争论会后期复现；证书=机器可检查的完成条件让 agent 无人迭代；反复问题在源头修；主要驱动是风险降低不是降本；小片调顺工作流再铺开） | 2026-09-23 | https://claude.com/blog/how-to-prepare-for-ai-driven-code-modernization-projects |
+| 104 | NVIDIA（Sophia Abbassi 等） | How to Evaluate AI Agents From Tool Calls to Task Completion（调用准确"必要但不充分"；端到端评结局做发布门禁、步骤级评过程做定位；单次调用准确≠任务完成；工具精确率掩盖槽位填充失败；**报区间不报点**；基准之间不可比；污染面含联网搜到答案键） | 2026-09-21 | https://developer.nvidia.com/blog/how-to-evaluate-ai-agents-from-tool-calls-to-task-completion/ |
+| 105 | LangChain（Oliver Armstrong） | How Snyk Turned an Internal Support Agent into a Customer Feature（内部跑一年再对外；工具按用户注册为类型化函数 + 中间件挂钩；**agent 只能访问用户本来就能看的数据**；离线+线上双层评测并在 CI 用阈值阻断；6 万+ 查询、85%+ 免工单） | 2026-10-08 | https://www.langchain.com/blog/how-snyk-turned-an-internal-support-agent-into-a-customer-feature |
+| 106 | Cloudflare | Introducing Clef: our open-source decision models（输出受限结构而非自由文本；预填充后并行打分的非自回归推理；标签平滑 + Brier 校准；边缘部署压延迟；**诚实披露四项基准里输掉一项**：CLINC150+OOS 66.77 vs 89.27；中位延迟 209ms vs 对照 524ms） | 2026-10-01 | https://blog.cloudflare.com/clef-decision-models/ |
+| 107 | Anthropic Frontier Red Team（William Zhou, Daniel Freeman） | AI models may be capable of self-replicating without access to a datacenter（26B 模型在 15 台电视盒子上分布式推理；前沿开源模型在 8 节点 VPC 完成端到端复制 5 试 4 成；推理搭建下限 9B；可用的防御动作：监控多 GB 载荷与设备间流量、消除未认证服务、带通知的清理 14 天清 92%、蜜罐取 harness；作者自陈把网络利用环节做成平凡，是成功率上界） | 2026-10-12 | https://www.anthropic.com/research/self-replicating-ai |
+| 108 | OpenAI | Better prompt caching for GPT-6（工具变化不一定要删定义——用允许列表与工具选择 none 保住缓存前缀；新指令追加到上下文末尾；推理档位可中途调整而不破坏缓存；预热已知上下文；缓存诊断能区分工具/模型/参数/输入哪一类导致失效。**浏览器读取**） | 2026-09-22 | https://openai.com/index/better-prompt-caching-for-gpt-6 |
+| 109 | OpenAI（Asana StackAI 案例） | Asana cuts model costs 76x in browser tests with GPT-6.1 Sol（缓存只缓了固定指令没缓逐轮增长的历史；历史既增长又被裁剪时只加缓存无效，须降低裁剪频率使历史在两次清理间保持稳定；先把代码重构成支持受控实验再开跑；144 次运行研究，成本 $36.21→$1.24→$0.47，快 5 倍。**浏览器读取**） | 2026-10-09 | https://openai.com/index/asana-browser-agent |
+| 110 | OpenAI（LegalOn 案例） | LegalOn halves Codex costs while maintaining development speed（按任务复杂度分三档并默认从轻量档起步；按业务成熟度分预算——成熟业务承担降本目标、投入期新业务保充足预算；选型给默认 + 系统限额给硬边界；收紧快速模式默认开关并用并行补回速度；日均成本降 65% 而速度不变。**浏览器读取**） | 2026-10-08 | https://openai.com/index/legalon-halves-codex-costs |
+| 111 | OpenAI（Third Moment Research 案例） | How Third Moment Research runs 10,000 agents for 36+ hours（1 万 agent 并发、单次会话 36–48 小时；把 Codex 当外层 harness 的子 agent，由外层看轨迹决定重试/终止/升级——内层无法区分"做完了"与"以为做完了"；把轮询等待当零价值消耗消除，回测 3 小时→3–5 分钟。**浏览器读取**） | 2026-10-14 | https://openai.com/index/third-moment-research |
+| 112 | OpenAI | A model guide for the GPT-6 family（模型与推理档位是智能/价格权衡；默认从轻量档起步；prompt 与 skills 四个复查面——技能描述短而明确、AGENTS.md 说明何时相关并显式授权安全例行流程、用清晰边界替代"永远先问"、把"完成"定义写死含跑通与检查；长跑用中途纠偏与异步工具。**浏览器读取**） | 2026-10-02 | https://openai.com/index/practical-guide-building-gpt-6 |
+| 113 | OpenAI | Skills that shell and compact（技能描述是路由逻辑不是文案，写"该用 vs 不该用"；补负例后触发率才恢复——初版可用化反而让定向评测触发率降约 20%；Skill 过多时平台自动截短描述；模板放 Skill 内而非系统提示是质量与延迟收益最大的改动之一） | 2026-02-11 | https://developers.openai.com/blog/skills-shell-tips |
+| 114 | OpenAI | Rethinking skills and prompts for GPT-6（描述要短而明确；多工作流 Skill 根文档做最小路由器指向配套文档；AGENTS.md 写"何时相关"并显式授权安全例行流程；用清晰边界替代"永远先问"；把"完成"定义写死；容器复用与压缩的取舍） | 2026-09-11 | https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra |
+| 115 | OpenAI | How we eval Skills（七步流程；prompt 集四类 case——显式点名/隐式/上下文依赖/负控制 should_trigger=false；用确定性程序解析结构化输出判触发，不用 LLM 打分；同一 harness 可扩展为查工具横跳、token 预算、构建通过；主观项用带约束 JSON rubric） | 2026-01-22 | https://developers.openai.com/blog/eval-skills |
+| 116 | OpenAI | Automating repetitive work at OpenAI with Codex（Runme notebook 加目标单元格让工作可重复执行；WebMCP 把浏览器侧操作注册成工具供 agent 调用；决策在消散进聊天记录前先落到 notebook） | 2026-08-25 | https://developers.openai.com/blog/automating-repetitive-work-at-openai-with-codex |
+| 117 | OpenAI | Codex as a platform（为 ARC-AGI-3 重设计 harness——任务表示、动作空间、上下文组织、反馈回路——把某前沿模型得分从 13.3% 提到 38.3%，输出 token 降到约六分之一；三层集成：`codex exec` / SDK / app-server；比模型必须固定 harness） | 2026-08-19 | https://developers.openai.com/blog/codex-as-a-platform |
 
 ---
 
@@ -129,7 +172,7 @@
 | 无 eval 团队盲飞 | §7 Eval-first 工程、§8 生产上线指标 |
 | 在线 A/B 测保留率 | §7.7 强 Agent 评测、§8.1 |
 | 三起变更叠加致退化 | §1.6 Loop、§8.1 生产上线指标 |
-| HN 质疑自主性声明 | §8.1、§0.5 厂商案例仅作参考 |
+| HN 质疑自主性声明 | §8.1 生产上线指标、§7.8 成本归因、§19 硬规则 76（自报与独立结果比较） |
 | 钓鱼偷 AWS 凭证 24/25 成功 | §10.1 Containment、§10.3 不可信数据 |
 | 信任对话之前就执行 hook | §10.1 Containment、§1.8 规则编译 |
 | 审计过的连接器≠审计过的数据 | §10.3 不可信数据、§4.1 Tool Contract |
@@ -205,3 +248,43 @@
 | Loop 六组件与五种死法（可靠性来自控制面 + 验证结果结构化 + 状态文件必须被读 + 权限四级梯 + 预算上限 + 产物可沉淀准入 + harness 自维护 loop） | §1.6 Loop 规则、§5.11 Loop State、§7.6 分层验证、§6.1 审批 |
 | 组织是人的 Harness（规则与补丁归资源拥有方 + 共同任务书六问 + 按用户可见结果验收 + 坏消息必须能上报） | §5.7 知识资产分层、§2.8 阶段上下文包与交接产物、§7.4 证据化置信度 |
 | 评委可信度瓶颈在输入（四层数据清洗 + 跨轮按轮投喂 + 诚实跳过 N/A + 四层归因 + 指标先拆分子分母 + 样本量按 CI 反推） | §7.1 Eval 开发要求、§7.7 评测 Harness、§7.10 Online/Offline 飞轮 |
+| Harness 不是默认有益（前沿模型加 harness 成本涨 7 倍验收零提升；弱模型从 3/10 到 10/10；判据是介入时机与频次） | §1.2 Harness 设计 |
+| 合并量 5 个月涨 10 倍压垮支撑设施（自建系统的规模判据 + 对 agent 产出说"不"） | §1.2 Harness 设计、§9.5 Harness 熵、§5.2 关键状态外置 |
+| 孪生环境保真度的量化边界（状态数相当但连接数偏少、聚焦型任务差距明显） | §1.3 环境真实反馈、§7.7 评测 Harness |
+| 沙箱悬赏的三条判据（客机派生值不可作权威 + 同一决策只留一个执行点 + 依赖秘密的边界不是边界） | §10.1 沙箱边界、§10.4 Workspace 与 Sandbox 状态 |
+| 20 万行过夜优化（6 项只过 2 项及四种驳回形态 + 通过开源测试却挂内部测试 + agent 探索人做减法） | §7.6 分层验证与假修复检测、§8.1 生产上线指标、§1.2 自主度上界 |
+| token 效率七手段（系统提示砍 66% + 工具按需加载 + 缓存断点前移 + 每十行标行号 + 删子 agent 引导；子 agent 有协调税；只在评测集优化不够） | §2.3 Context Budget、§2.10 上下文成本与稳定前缀、§9.6 成本可观测 |
+| 973 线程模型路由对照（成本降 64% 而质量无显著差异；只用便宜模型的对照组一天内被叫停；子 agent 各自选模型漏掉收益） | §7.9 模型分层路由、§9.6 成本可观测 |
+| 训练环境奖励投机取巧（四类越界行为 + 模型自述推理不是可靠证据 + 联网评测下线） | §10.3 不可信数据规则、§10.1 沙箱边界、§8.9 Lesson 与 Pattern |
+| 技能生态分布（0.04% 占 62% 安装 + 近半数只装一次 + 跨行业 3.6 倍 + 供过于求领域采用更低） | §14 Skills 规范、§5.7 知识资产分层 |
+| 高频上下文决策交窄任务专用小模型（受限输出空间 + 失败不阻塞主链路 + 开放式生成仍用通用模型） | §2.3 Context Budget、§7.9 模型分层路由 |
+| MCP 网关规模化（800 服务/5000 工具 + 无跨服务搜索 + 发现不等于暴露 + 渐进发现与响应投影） | §11.3 MCP 成本与上下文边界、§4.6 Capability 与 Action Space |
+| 模糊测试三层架构（agent 决策/工具执行 + 阶段只经持久状态通信 + 为两个目的分别产出探针 + 平台期检测） | §4.1 Tool 是契约、§5.3 可恢复 Workflow、§4.4 Tool 输出规则 |
+| ReviewBench 双口径（固定金标集随能力失效 + grounded 与 augmented 并设 + 评论数量不代表质量） | §7.7 评测 Harness、§7.10 Online/Offline 飞轮、§7.1 Eval 开发要求 |
+| 评测五条反直觉（挑模型失败案例采到失败指纹 + 评委用可核对命题 + 噪音须小于最小可行动改进 + 残留文件会递答案 + 用户流量偏易） | §7.1 Eval 开发要求、§7.4 证据化置信度、§7.7 评测 Harness |
+| 环境质量 agent（不设置信度字段只信引用 + 聚类验证前只算主张 + 随机采样而非只筛异常 + 跳过显式记账） | §7.4 证据化置信度、§7.5 自动冒烟与回归闭环、§8.3 Trace 与 Trajectory |
+| trace 构成（85% 是工具输出 + 固定预算按优先级填充及其失效边界 + 向量检索分不出做成了与声称做成了） | §2.3 Context Budget、§8.3 Trace 与 Trajectory、§7.10 飞轮 |
+| 评测高频问答判据（10–20 条起步 + 按线程评 + 结果对不等于路径对 + 评委成本差 80 倍而判定一致） | §7.1 Eval 开发要求、§7.10 Online/Offline 飞轮、§7.9 模型分层路由 |
+| 法务 agent（评审时间降 20% + 语气规范归法务持有 + 半衰期对抗概念漂移 + 纯检索三失败） | §5.7 知识资产分层、§7.9 模型分层路由、§7.10 自进化纪律 |
+| 持久化执行的价值（重跑可能走出另一条路径 + 知识放图拓扑而非提示词 + 专用模型阈值升级） | §5.3 可恢复 Workflow、§7.9 模型分层路由、§3.10 编排协议 |
+| 技能与工具绑定（未读技能调用失败为未知工具 + 可固定与重载 + 中途加载保缓存前缀） | §14.2 渐进式加载、§2.10 上下文成本与稳定前缀 |
+| 无人值守 agent 设计（按来源存书签 + 失败不等于沉默 + 发帖幂等与"可能已发" + 陈旧记忆是危害 + 凭证占位符） | §5.11 Loop State、§5.6 故障分级、§5.5 Working Memory、§10.1 沙箱边界 |
+| 让 agent 造工具（意图明确后专用界面优于反复对话 + 把 agent 当工具反复用是 token 浪费） | §16 项目应内置能力、§4.9 CLI 与 MCP 选择 |
+| 轨迹是 trace 的投影（每条消息只列一次 + 定位行为后再跳进 trace + 单条轨迹只反映一次会话） | §8.3 Trace 与 Trajectory、§7.10 飞轮 |
+| 原子声明核对法（生成与验证分离禁止自证 + 拆成原子声明做三态判断 + "部分"价值最高 + 技术载荷逐字保留 + 强制申报冲突与省略 + 人工降为裁定标记行） | §7.7 忠实性验证的原子声明法、§2.6 单一表示、§10.3 不可信数据 |
+| 沙箱从部署配置改为运行时参数（放置下移到调用点 + 预热复用 + 基础镜像预分发 + 快照可复用可分叉） | §4.4 Tool 输出规则、§1.3 环境真实反馈、§5.4 Workspace 与 Sandbox 状态 |
+| 读好扩写难扩（加副本拖慢写 + 持久化机制即扩展机制 + 最小协调面 + 存储计算解耦 + 维护移出服务路径） | §5.2 Checkpoint 与 Store 分离、§5.4 执行账本 |
+| 窄任务小模型 + 两段式判真伪（模型大小≠有用 + 正则保召回小模型读上下文判真伪 + 难负例靠学习不靠规则 + 不替代确定性扫描 + 报完整对照含败项） | §7.9 模型分层路由、§4.1 Tool 是契约 |
+| 大规模改造方法论（先分类再建证书最后动代码 + 三类改造标准不同 + 证书=机器可检查完成条件 + 源头修复 + 风险降低而非降本） | §12.3.1 大规模改造、§7.6 分层验证 |
+| 端到端与步骤级双评（调用准确必要不充分 + 结局做门禁过程做定位 + 报区间不报点 + 基准不可比 + 污染含联网搜答案） | §7.7 评测 Harness、§7.2 必备 Grader、§7.10 飞轮 |
+| 内部先跑再对外 + 权限等于用户可见范围（工具按用户注册 + 中间件挂钩 + 离线线上双层评测 + CI 阈值阻断） | §6 审批与权限、§3.14 代码编排、§7.5 自动冒烟 |
+| 决策模型输出受限结构（非自回归并行打分 + 校准损失 + 边缘部署 + 诚实披露败项） | §7.9 模型分层路由、§2.3 Context Budget |
+| 自我复制能力水位与防御动作（监控异常载荷与设备间流量 + 消除未认证服务 + 带通知的清理 + 蜜罐取 harness；作者自陈是成功率上界） | §10.1 沙箱边界、§9.1 默认可观测、§10.5 OWASP Agentic |
+| 历史纳入缓存 + 降裁剪频率 + 工具变更用允许列表 + 预热 + 缓存诊断（只缓固定前缀会让逐轮增长的历史每轮全价重算） | §2.10 上下文成本与稳定前缀、§9.6 成本可观测 |
+| 按业务成熟度分预算 + 三档模型默认分工 + 选型与限额双工具 + 收紧高成本模式默认开关 | §9.6 成本可观测与预算控制、§7.9 模型分层路由 |
+| 外层 harness 兜住提前停下 + 消除轮询式零价值消耗 + 受控实验需先重构代码 | §1.6 Loop 规则、§5.3 可恢复 Workflow、§7.6 分层验证 |
+| 技能描述当路由判据写 + 负例修复触发率 + 描述膨胀被截短 + 模板放 Skill 内 | §14.2 渐进式加载、§13.5 AGENTS.md 写法 |
+| AGENTS.md 写"何时相关" + 清晰边界替代"永远先问" + 完成定义写死 | §13.5 模块 AGENTS.md、§13.2 分层规则 |
+| Skill 触发评测（四类 case 含负控制 + 确定性 grader 解析结构化输出 + 同 harness 扩展查横跳与预算） | §7.7 强 Agent 评测 Harness、§7.2 必备 Grader |
+| notebook 目标单元格 + 浏览器侧操作注册成工具 + 决策先落盘再消散 | §16 项目应内置能力、§2.5 ArtifactRef |
+| harness 重设计把 ARC-AGI-3 从 13.3% 提到 38.3%（输出 token 降六分之一）+ 比模型须固定 harness | §1.2 Harness 设计、§1.3 环境真实反馈 |

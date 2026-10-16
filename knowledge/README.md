@@ -36,13 +36,13 @@
 | 文件 | 范围 | 覆盖章节 |
 |---|---|---|
 | [`01-foundations.md`](standards/01-foundations.md) | §1 核心原则：最简实现、Harness 设计、环境反馈、系统约束优先、约束分级、Loop Engineering、Runtime Protocol、规则编译与拦截、规则文件衰减 | §1 |
-| [`02-context-engineering.md`](standards/02-context-engineering.md) | §2 上下文组成、信任分级、预算、压缩、数据生命周期、单一表示、Prompt 预算预检、阶段交接、分层加载、成本与稳定前缀、上游一次采集、索引优先检索 | §2 |
+| [`02-context-engineering.md`](standards/02-context-engineering.md) | §2 上下文组成、信任分级、预算、压缩、数据生命周期、单一表示、Prompt 预算预检、阶段交接、分层加载、成本与稳定前缀（含历史缓存与缓存诊断）、上游一次采集、索引优先检索 | §2 |
 | [`03-orchestration-and-hitl.md`](standards/03-orchestration-and-hitl.md) | §3 Agent 与 Workflow 选择（Tool Loop/Workflow/多 Agent 准入、任务分级、协作平面、代码编排）、§6 Human-in-the-loop（审批、Guardrail、结构化澄清、审阅回环） | §3、§6 |
-| [`04-tools-and-mcp.md`](standards/04-tools-and-mcp.md) | §4 Tool 设计（契约、描述、输出、Evals、Capability、Error Contract、CLI/MCP 选择、Schema 成本）、§11 MCP 使用规范与安全基线 | §4、§11 |
+| [`04-tools-and-mcp.md`](standards/04-tools-and-mcp.md) | §4 Tool 设计（契约、描述、输出、沙箱运行时化、Evals、Capability、Error Contract、CLI/MCP 选择、Schema 成本）、§11 MCP 使用规范与安全基线 | §4、§11 |
 | [`05-state-memory-durability.md`](standards/05-state-memory-durability.md) | §5 四类状态、Checkpoint 与 Store、可恢复 Workflow、执行账本、Working Memory、故障分级、知识资产与回流、Loop State、并发、Interrupt/Resume | §5 |
-| [`06-evals-and-quality.md`](standards/06-evals-and-quality.md) | §7 Evals-first（Grader、Gate、证据化置信、假修复检测、成本归因、模型分层、Online/Offline 飞轮、评委输入的数据工程质量）、§8 生产质量、Trajectory 与经验闭环 | §7、§8 |
-| [`07-observability-and-security.md`](standards/07-observability-and-security.md) | §9 Observability 与 Trace、§10 安全、Containment 与最小权限（沙箱边界、Brain/Hands/Session、不可信数据、OWASP、AI-BOM、记忆投毒） | §9、§10 |
-| [`08-delivery-and-project-docs.md`](standards/08-delivery-and-project-docs.md) | §12 长任务开发范式、§13 AGENTS.md 规范、§14 Skills 规范、§15 CLI 自动化、§16 项目应内置能力、§17 Definition of Done | §12、§13、§14、§15、§16、§17 |
+| [`06-evals-and-quality.md`](standards/06-evals-and-quality.md) | §7 Evals-first（Grader、Gate、证据化置信、假修复检测、成本归因、模型分层、Online/Offline 飞轮、评委输入的数据工程质量、评测案例选取与指标演进、忠实性验证的原子声明法、端到端与步骤级双评）、§8 生产质量、Trajectory 与经验闭环 | §7、§8 |
+| [`07-observability-and-security.md`](standards/07-observability-and-security.md) | §9 Observability 与 Trace、§10 安全、Containment 与最小权限（沙箱边界、Brain/Hands/Session、不可信数据、OWASP、AI-BOM、记忆投毒、沙箱边界的三条结构判据）；§9.6 含按业务成熟度分预算与选型/限额双工具 | §9、§10 |
+| [`08-delivery-and-project-docs.md`](standards/08-delivery-and-project-docs.md) | §12 长任务开发范式（含 §12.3.1 大规模改造方法论）、§13 AGENTS.md 规范、§14 Skills 规范、§15 CLI 自动化、§16 项目应内置能力、§17 Definition of Done | §12、§13、§14、§15、§16、§17 |
 | [`09-review-and-hard-rules.md`](standards/09-review-and-hard-rules.md) | §18 架构 Review Checklist、§19 七十八条硬规则 | §18、§19 |
 | [`10-references-and-evolution.md`](standards/10-references-and-evolution.md) | §20 参考来源、附录：规范落地与演进 | §20、附录 |
 

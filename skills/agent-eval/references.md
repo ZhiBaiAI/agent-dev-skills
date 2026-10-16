@@ -9,6 +9,10 @@
 | 成本指标 | `knowledge/standards/06-evals-and-quality.md`（§7.8-7.9） | 成本归因、模型分层路由 |
 | 机评工程 | `knowledge/cases/03-evals-and-quality.md`（§5） | LLM-as-Judge 校准、rubric 案例 |
 | 评委输入质量 | `knowledge/standards/06-evals-and-quality.md`（§7.1.1） | 机评输入四层清洗、按轮投喂、诚实跳过 N/A、评测异常四层归因 |
+| 评测案例选取与指标演进 | `knowledge/standards/06-evals-and-quality.md`（§7.1） | 按人类难度而非模型失败选题、噪音门槛、环境残留隔离、双口径指标 |
+| 忠实性验证 | `knowledge/standards/06-evals-and-quality.md`（§7.7 原子声明法） | 生成与验证分离、原子声明三态核对、强制申报省略 |
+| 端到端与步骤级双评 | `knowledge/standards/06-evals-and-quality.md`（§7.7） | 调用准确必要不充分、结局做门禁过程做定位、报区间不报点 |
+| 评测环境保真度 | `knowledge/cases/02-multi-agent-and-durability.md`（§4.14） | 孪生环境能复现多少难度、复现不了什么 |
 | 防自我欺骗 | `knowledge/practices/03-verification-and-safety.md`（§5） | 评测集冻结、对冲指标、目标人复核 |
 | 自助评测 harness | `knowledge/standards/06-evals-and-quality.md`（§7.7） | 用强 Agent 搭评测 harness |
 | 反例与回归来源 | `knowledge/cases/03-evals-and-quality.md`（§5、§6） | 生产质量案例 |

@@ -5,6 +5,7 @@
 | 阶段 | 加载什么 | 为什么 |
 |---|---|---|
 | 建项目文件骨架 | `knowledge/standards/08-delivery-and-project-docs.md`（§12.2、§13） | `.agent/` 树、AGENTS.md 作为路由器 |
+| 大规模改造 | `knowledge/standards/08-delivery-and-project-docs.md`（§12.3.1） | 先分类、再建证书、最后动代码 |
 | 分步开发与交接 | `knowledge/standards/08-delivery-and-project-docs.md`（§12.1） | 可续接、可问责的交付纪律 |
 | 门槛与假绿防御 | `knowledge/standards/06-evals-and-quality.md`（§7.6） | 分层验证、假修复检测 |
 | 生成项目内置能力 | `knowledge/standards/08-delivery-and-project-docs.md`（§16） | 项目应具备的工程能力基线 |
