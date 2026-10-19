@@ -9,9 +9,9 @@
 
 - **Netflix / LinkedIn 2026 年 Agent 生产文章**：站点限定搜索无 2026 年结果（Shopify 与 Vercel 已于 2026-09-22 后各出文章，见 #79、#80、#85，此条已部分推翻）。**注意**：这两家技术博客对脚本请求返回 403，需用浏览器核验；"脚本读不到"不等于"没有文章"，核验方式见仓库根 `article-intake-workflow.md` 第二节「抓不到就换浏览器读」。
 - **会议分享（ICML/NeurIPS/QCon/GopherCon 2026 有公开 slides/录像的 Agent 经验）**：未找到 2026 年内已公开且符合"真实问题+解决"的会议分享。
-- **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15 复验），未采纳。
-- **OpenAI 开发者博客（developers.openai.com）各篇**：**此条已推翻（2026-10-16）**。此前记为"全站不显示发布日期"，实测是脚本抓不到客户端渲染的日期，**用浏览器读全部有日期**——`Shell + Skills + Compaction` 2026-02-11、`Rethinking skills and prompts for GPT-6 Astra` 2026-09-11、`Testing Agent Skills Systematically with Evals` 2026-01-22、`Automating repetitive work at OpenAI with Codex` 2026-08-25、`Run long horizon tasks with Codex` 2026-02-23、`Codex as a platform` 2026-08-19。这些篇目按正常流程重新评估，不再挂"待观察"。
-- **OpenAI 主站（openai.com）各篇**：对脚本请求全部返回 403（2026-10-16 实测），**必须用浏览器读**；同日实测浏览器可正常获取全文与日期（例：`How Third Moment Research runs 10,000 agents` 2026-10-14）。
+- **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15、2026-10-19 两次复验，含两个路径变体），未采纳。
+- **OpenAI 开发者博客（developers.openai.com）各篇**：**此条已推翻，且读取方式需更正（2026-10-19）**。此前记为"全站不显示发布日期/日期客户端渲染，须用浏览器"；实测再更正为：**服务端渲染的日期用脚本即可读到**——`curl` 抓 `https://developers.openai.com/blog/<slug>` 能直接解析出 `Oct 14, 2026` 这类日期（2026-10-19 实测 8 篇全部成功），无需浏览器。已入库篇目：`Shell + Skills + Compaction` 2026-02-11、`Rethinking skills and prompts for GPT-6 Astra` 2026-09-11、`Testing Agent Skills Systematically with Evals` 2026-01-22、`Automating repetitive work at OpenAI with Codex` 2026-08-25、`Run long horizon tasks with Codex` 2026-02-23、`Codex as a platform` 2026-08-19。
+- **OpenAI 主站（openai.com）各篇**：对脚本请求返回 403（2026-10-16 实测），需用浏览器读。**但常规跟踪有更省事的通道（2026-10-19 实测）**：`https://openai.com/news/rss.xml` 返回 200 且含完整标题、发布日期与链接（约 1,300 条），可直接用于发现与按日期筛选，再对入选篇目用浏览器读正文。示例条目：`How Third Moment Research runs 10,000 agents for 36+ hours` 2026-10-14。
 
 ---
 
@@ -137,6 +137,12 @@
 | 115 | OpenAI | How we eval Skills（七步流程；prompt 集四类 case——显式点名/隐式/上下文依赖/负控制 should_trigger=false；用确定性程序解析结构化输出判触发，不用 LLM 打分；同一 harness 可扩展为查工具横跳、token 预算、构建通过；主观项用带约束 JSON rubric） | 2026-01-22 | https://developers.openai.com/blog/eval-skills |
 | 116 | OpenAI | Automating repetitive work at OpenAI with Codex（Runme notebook 加目标单元格让工作可重复执行；WebMCP 把浏览器侧操作注册成工具供 agent 调用；决策在消散进聊天记录前先落到 notebook） | 2026-08-25 | https://developers.openai.com/blog/automating-repetitive-work-at-openai-with-codex |
 | 117 | OpenAI | Codex as a platform（为 ARC-AGI-3 重设计 harness——任务表示、动作空间、上下文组织、反馈回路——把某前沿模型得分从 13.3% 提到 38.3%，输出 token 降到约六分之一；三层集成：`codex exec` / SDK / app-server；比模型必须固定 harness） | 2026-08-19 | https://developers.openai.com/blog/codex-as-a-platform |
+| 118 | Anthropic / Claude Code（Addy Osmani, Morgan Westlee Lunt, Qing Wang） | How the Claude Code team does code review（七层评审防线 + 风险分级人工审批 + 审批绑定 commit + 事故即评测集 + 评审收敛：一轮通过 65%→78%、≥5 轮 8.9%→1.5%、平均轮次 2.08→1.32；合并量翻倍而回滚率降超 40%） | 2026-10-16 | https://claude.dev/blog/solving-code-review-at-anthropic/ |
+| 119 | Google（Hugo Selbie, Dani Zamora, Jesse Carah, John DeMartino） | Evaluating AI agents: moving past the vibe check（CUJ 定义评测点 + 模拟用户起步 + Day 0 红笔读 5–20 条 trace + 四陷阱 + Day 2 CI 双规则 + judge 用人工标注校准 + 50–60 次小改动调优） | 2026-10-15 | https://developers.googleblog.com/en/evaluating-ai-agents-moving-past-the-vibe-check/ |
+| 120 | LangChain（Jess Weng） | Context Engineering: How Deep Agents Remember（外置 / 摘要 / 技能渐进披露 / 子 agent 隔离 / 长期记忆五类手段；外置阈值约 2 万 token、用户消息 5 万、摘要触发 85%；六条原则：外置优于截断、压缩须可恢复、知识按需加载、噪音要隔离、记忆要自持、阈值要可配） | 2026-10-14 | https://www.langchain.com/blog/context-engineering-deep-agents-remember |
+| 121 | 腾讯技术工程（komahu） | 3 个月用 Harness 重构 90 万行旧项目（旧系统当需求说明书全部重写；验收标准写死并量化；子 Agent 按维度专职审查；红线配置脱离脚本默认值；变异测试只跑增量；CLI + Hook 守卫防篡改；Context 三层加载。结果：12 万行代码 / 15 万行文档 / 6000+ 测试 / 覆盖率 86%，两月 30+ 需求） | 2026-10-16 | https://mp.weixin.qq.com/s?__biz=MjM5ODYwMjI2MA==&mid=2649804394&idx=1&sn=e5c46efb358d97b9f327f49175a8da53 |
+| 122 | Carlos Kelkboom（Patrick Akil 播客，InfoQ 中文编译） | AI 生成的代码看不懂就扔掉重来（五条原则：亲自搭骨架、主 Agent 只读且把握 >90% 才启动执行、看不懂就丢弃重做、尽量一次做大、多路并行加独立评审；先看 diff 再看文件；PR 讨论不可消失） | 2026-10-18 | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295352&idx=1&sn=9ee14521ea3fad2bf13007ac2abec56f |
+| 123 | Anthropic（官方文档；InfoQ 中文转述） | Dynamic Workflows 编排与完成语义（编排程序替代主 Agent 逐次协调；`completed` 只代表程序执行结束；累计 1000 / 并发 64 / 默认 24 小时；预算非硬开关；上下文隔离≠文件隔离；子 Agent 不能互发消息） | 2026-10-18（文档 2026-10-19 核验） | https://platform.claude.com/docs/en/managed-agents/workflow-runs |
 
 ---
 
@@ -288,3 +294,9 @@
 | Skill 触发评测（四类 case 含负控制 + 确定性 grader 解析结构化输出 + 同 harness 扩展查横跳与预算） | §7.7 强 Agent 评测 Harness、§7.2 必备 Grader |
 | notebook 目标单元格 + 浏览器侧操作注册成工具 + 决策先落盘再消散 | §16 项目应内置能力、§2.5 ArtifactRef |
 | harness 重设计把 ARC-AGI-3 从 13.3% 提到 38.3%（输出 token 降六分之一）+ 比模型须固定 harness | §1.2 Harness 设计、§1.3 环境真实反馈 |
+| AI 评审七层防线 + 风险分级审批绑 commit + 事故即评测集 + 评审收敛（59% 为存量代码、轮次上限） | §7.6 Agent 产出量超过人阅读量时的评审流水线、§6.1 审批 |
+| CUJ 定义评测点 + 红笔读 trace + judge 用人工标注校准 + CI 全局阈值与零回归双规则 | §7.1 Eval 开发要求、§7.3 Gate 设计 |
+| 外置优于截断 + 压缩须可恢复 + 尖峰与缓升分开处理 + 最近消息逐字保留 + 记忆自持 | §2.4 上下文压缩、§2.5 上下文数据生命周期 |
+| 骨架先行 + 主 Agent 只读 + 看不懂即止损重做 + 一次做大优于小步迭代 | §1.2 骨架先行与执行主 Agent 只读、§12.4 隔离工作区 |
+| `completed` 只代表程序跑完 + 累计数与并发数不同约束 + 预算非硬开关 + 上下文隔离≠文件隔离 | §1.6 Loop 规则、§3.3.1 子 Agent 运行时协作契约 |
+| 红线阈值脱离脚本默认值 + 变异测试度量断言有效性且只跑增量 + 状态只能经命令推进 | §7.6 分层验证与假修复检测、§5.11 Loop State |
