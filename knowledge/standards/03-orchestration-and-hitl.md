@@ -202,6 +202,7 @@ Capability Allowlist → Deterministic Validator → Policy/Approval → Optiona
 - **MUST** 对高风险或主观外发内容执行人工审批或独立 Review。
 - **MUST** 保存最终发送内容、接收对象、审批和 Tool 回执。
 - **MUST NOT** 允许通用 Shell、数据库或消息 Tool 绕过专用护栏。
+- **MUST** 对有副作用的参数做程序化前置断言，缺省即拒绝而非采用默认值：判据是"参数写错会造成不可逆或大范围影响"的动作（群发通知的目标为空、删除未带 where 条件、批量操作未设 limit、灰度未指定范围即全量），其合法性必须由确定性代码把关，不能靠模型自觉校验或提示词提醒。
 
 ## 6.5 结构化澄清
 

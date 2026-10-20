@@ -143,6 +143,12 @@
 | 121 | 腾讯技术工程（komahu） | 3 个月用 Harness 重构 90 万行旧项目（旧系统当需求说明书全部重写；验收标准写死并量化；子 Agent 按维度专职审查；红线配置脱离脚本默认值；变异测试只跑增量；CLI + Hook 守卫防篡改；Context 三层加载。结果：12 万行代码 / 15 万行文档 / 6000+ 测试 / 覆盖率 86%，两月 30+ 需求） | 2026-10-16 | https://mp.weixin.qq.com/s?__biz=MjM5ODYwMjI2MA==&mid=2649804394&idx=1&sn=e5c46efb358d97b9f327f49175a8da53 |
 | 122 | Carlos Kelkboom（Patrick Akil 播客，InfoQ 中文编译） | AI 生成的代码看不懂就扔掉重来（五条原则：亲自搭骨架、主 Agent 只读且把握 >90% 才启动执行、看不懂就丢弃重做、尽量一次做大、多路并行加独立评审；先看 diff 再看文件；PR 讨论不可消失） | 2026-10-18 | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295352&idx=1&sn=9ee14521ea3fad2bf13007ac2abec56f |
 | 123 | Anthropic（官方文档；InfoQ 中文转述） | Dynamic Workflows 编排与完成语义（编排程序替代主 Agent 逐次协调；`completed` 只代表程序执行结束；累计 1000 / 并发 64 / 默认 24 小时；预算非硬开关；上下文隔离≠文件隔离；子 Agent 不能互发消息） | 2026-10-18（文档 2026-10-19 核验） | https://platform.claude.com/docs/en/managed-agents/workflow-runs |
+| 124 | 徐鑫（腾讯云开发者） | AI 工程化防翻车指南（安全边界外置到 Harness；事前隔离授权 / 事中循环封顶与三色卡 / 事后门禁审计；MCP 工具描述哈希锁定、按声明授权、成本包络、哨兵只吹哨、门禁脚本写单测、虚拟需求空跑；知识库检索结果同样不可信；参数缺省即拒发） | 2026-10-20 | https://mp.weixin.qq.com/s/5zhFeM48-ipqDyIAPvRj9A |
+| 125 | Adam Tornhill（CodeScene；InfoQ 中文编译） | 三周重构 30 万行，Code Health 5.6→10.0（726 文件 / 2903 提交 / 25.2 万行改动 / 约 4000 美元；CodeHealth MCP 确定性评分 + 逐帧回放比对状态哈希；自建 22 方案 82 条说明并记录失败；小模型卡在局部最优；70%/45% 是推算非实测） | 2026-10-17（原文 2026-09-24） | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295294&idx=3&sn=38b16d3e03f2113fbe9fd53b43505f55 |
+| 126 | Pierre Pureur, Kurt Bittner, Todd Miller（InfoQ 中文编译） | 利用 AI 代码智能体优化软件架构的五种方法（记录遗留服务 / 发现架构缺陷 / 安全审计 / 提供架构基础 / 生成可测试 MVA；只给功能需求不会自动保证架构合理，须给可衡量 QAR 与权衡；编码变简单而写需求变难；架构评估有收益递减） | 2026-10-17（原文 2026-09-28） | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295294&idx=2&sn=3bb12b13f32ebdeddc3d8fbc617b525c |
+| 127 | 巷年（大淘宝技术） | 淘内会场 Agent Harness（一句话生成可投放页面；视觉软约束 / 货品认知约束 / 生码硬约束装配同一棵 DOM；视觉分组≠供给分组、wrapper 改变布局前提、供给写进属性；Skill 正文压缩后显式恢复；缓存未命中四类归因；交接用结论+记录地址；质检合法反例须持续回归） | 2026-10-19 | https://mp.weixin.qq.com/s?__biz=MzAxNDEwNjk5OQ==&mid=2650546485&idx=1&sn=b679cea45f2b32788e0c3eb2d3568cac |
+| 128 | 褚杏娟（InfoQ 原创） | 谷歌开源 Harness²（八类可改组件；任务级"提出—探测—组合"用行为差异替代 ground truth；Harnessing 级维护持续改进 Harness；WorkBuddy-Bench +11.5 / JobBench +4.5 / LAB +11.8pp；用测试时计算换成功率；执行器默认联网且 Codex 关沙箱；883 次提交 8 个月后维护成本超过使用收益） | 2026-10-19 | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295407&idx=1&sn=b8c188b3e578205013431c43c98bc95d |
+| 129 | Steef-Jan Wiggers（InfoQ 编译；原文 Cloudflare） | Cloudflare 容器跨租户数据泄露（漏洞在存储分配器而非虚拟机边界；64 KiB 精简块 + skip_block_zeroing，4 KiB 写入后残留 60 KiB；六个部署 5614 个可测目录块全部来自他人；修复须清空既有映射与镜像缓存；判据=隔离要逐层验证、"分配时清零"须显式配置） | 2026-10-19（原文 2026-09-24） | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295407&idx=4&sn=99d7b1b770fe9bc89cf7ca7a6b6bc3ae |
 
 ---
 
@@ -300,3 +306,10 @@
 | 骨架先行 + 主 Agent 只读 + 看不懂即止损重做 + 一次做大优于小步迭代 | §1.2 骨架先行与执行主 Agent 只读、§12.4 隔离工作区 |
 | `completed` 只代表程序跑完 + 累计数与并发数不同约束 + 预算非硬开关 + 上下文隔离≠文件隔离 | §1.6 Loop 规则、§3.3.1 子 Agent 运行时协作契约 |
 | 红线阈值脱离脚本默认值 + 变异测试度量断言有效性且只跑增量 + 状态只能经命令推进 | §7.6 分层验证与假修复检测、§5.11 Loop State |
+| 安全边界外置到 Harness + 知识库检索结果不可信 + 参数缺省即拒发 + 门禁脚本写单测 + 虚拟需求空跑 | §10.1 沙箱边界、§10.3 不可信数据规则、§6.4 对外通信、§7.3 Gate 设计 |
+| MCP 工具描述哈希锁定 + 按声明授权而非意图推断 + 成本包络触顶交人 + 哨兵只吹哨 | §11.2 MCP 安全基线、§9.6 成本可观测与预算控制 |
+| 判定机制可得性决定重构可行性 + 逐帧回放比对状态哈希 + 转换方案与失败记录手册化 | §12.3.1 大规模改造、§7.2 必备 Grader |
+| 架构约束须写成可衡量 QAR + 只给功能需求不保证架构 + 编码变简单而写需求变难 | §12.3.1 大规模改造、§12.3 Planner/Generator/Evaluator |
+| 视觉软约束/数据认知约束/生码硬约束装配同一 DOM + Skill 正文压缩后显式恢复 + 缓存未命中四类归因 + 交接带记录地址 | §2.4 上下文压缩、§2.10 上下文成本与稳定前缀、§2.8 阶段上下文包 |
+| 行为差异替代 ground truth + 用测试时计算换成功率 + 维护 Harness 成本超过使用收益 | §7.10 自进化纪律、§9.5 Harness 熵 |
+| 隔离须逐层验证含存储分配器 + "分配时清零"显式配置 | §10.1 沙箱边界 |
