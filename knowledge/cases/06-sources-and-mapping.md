@@ -7,11 +7,11 @@
 
 按"宁缺毋滥"原则，以下方向未找到满足筛选标准的 2026 年来源，明确标注：
 
-- **Netflix / LinkedIn 2026 年 Agent 生产文章**：站点限定搜索无 2026 年结果（Shopify 与 Vercel 已于 2026-09-22 后各出文章，见 #79、#80、#85，此条已部分推翻）。**注意**：这两家技术博客对脚本请求返回 403，需用浏览器核验；"脚本读不到"不等于"没有文章"，核验方式见仓库根 `article-intake-workflow.md` 第二节「抓不到就换浏览器读」。
+- **Netflix / LinkedIn 2026 年 Agent 生产文章**：**LinkedIn 已部分推翻（2026-10-22 核验）**——确有 2026 年文章（10-20 追踪基础设施重建、10-09 面向人与 agent 的数据上下文层），但前者属基础设施、后者属数据治理，均不合"agent 工程实践"方向，暂不收录。**Netflix 仍无法核验**：脚本请求 403，浏览器补读仍被 Cloudflare 人机验证拦截（页面显示 "Performing security verification"，Ray ID `a4e49eb38d51c4f6`）；"读不到"不等于"没有文章"，需人工在真实浏览器中核验。
 - **会议分享（ICML/NeurIPS/QCon/GopherCon 2026 有公开 slides/录像的 Agent 经验）**：未找到 2026 年内已公开且符合"真实问题+解决"的会议分享。
-- **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15、2026-10-19 两次复验，含两个路径变体），未采纳。
+- **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15、2026-10-19、2026-10-22 三次复验，含路径变体），未采纳；三次均为 404，疑似从未发布或已撤稿。
 - **OpenAI 开发者博客（developers.openai.com）各篇**：**此条已推翻，且读取方式需更正（2026-10-19）**。此前记为"全站不显示发布日期/日期客户端渲染，须用浏览器"；实测再更正为：**服务端渲染的日期用脚本即可读到**——`curl` 抓 `https://developers.openai.com/blog/<slug>` 能直接解析出 `Oct 14, 2026` 这类日期（2026-10-19 实测 8 篇全部成功），无需浏览器。已入库篇目：`Shell + Skills + Compaction` 2026-02-11、`Rethinking skills and prompts for GPT-6 Astra` 2026-09-11、`Testing Agent Skills Systematically with Evals` 2026-01-22、`Automating repetitive work at OpenAI with Codex` 2026-08-25、`Run long horizon tasks with Codex` 2026-02-23、`Codex as a platform` 2026-08-19。
-- **OpenAI 主站（openai.com）各篇**：对脚本请求返回 403（2026-10-16 实测），需用浏览器读。**但常规跟踪有更省事的通道（2026-10-19 实测）**：`https://openai.com/news/rss.xml` 返回 200 且含完整标题、发布日期与链接（约 1,300 条），可直接用于发现与按日期筛选，再对入选篇目用浏览器读正文。示例条目：`How Third Moment Research runs 10,000 agents for 36+ hours` 2026-10-14。
+- **OpenAI 主站（openai.com）各篇**：对脚本请求返回 403（2026-10-16、2026-10-22 两次实测），需用浏览器读。**发现通道（2026-10-22 复验有效）**：`https://openai.com/news/rss.xml` 返回 200 且含完整标题、发布日期与链接（约 1,300 条），可直接用于发现与按日期筛选。**但正文读取比此前记录的更不稳定（2026-10-22 实测）**：`llms.txt`、`.md` 后缀、完整浏览器请求头全部 403；用 Playwright 真实 Chromium 补读时，一篇成功（`Patch the Planet` 2026-10-21），另一篇被 Cloudflare 挑战页拦住（`Using thousands of AI agents to uncover new leads in biological data`，标题显示 "Just a moment..."）。结论：RSS 可稳定用于发现，正文需逐篇尝试浏览器，且部分页面即使用自动化浏览器也不可读，须如实标注未核验。
 
 ---
 
@@ -149,6 +149,9 @@
 | 127 | 巷年（大淘宝技术） | 淘内会场 Agent Harness（一句话生成可投放页面；视觉软约束 / 货品认知约束 / 生码硬约束装配同一棵 DOM；视觉分组≠供给分组、wrapper 改变布局前提、供给写进属性；Skill 正文压缩后显式恢复；缓存未命中四类归因；交接用结论+记录地址；质检合法反例须持续回归） | 2026-10-19 | https://mp.weixin.qq.com/s?__biz=MzAxNDEwNjk5OQ==&mid=2650546485&idx=1&sn=b679cea45f2b32788e0c3eb2d3568cac |
 | 128 | 褚杏娟（InfoQ 原创） | 谷歌开源 Harness²（八类可改组件；任务级"提出—探测—组合"用行为差异替代 ground truth；Harnessing 级维护持续改进 Harness；WorkBuddy-Bench +11.5 / JobBench +4.5 / LAB +11.8pp；用测试时计算换成功率；执行器默认联网且 Codex 关沙箱；883 次提交 8 个月后维护成本超过使用收益） | 2026-10-19 | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295407&idx=1&sn=b8c188b3e578205013431c43c98bc95d |
 | 129 | Steef-Jan Wiggers（InfoQ 编译；原文 Cloudflare） | Cloudflare 容器跨租户数据泄露（漏洞在存储分配器而非虚拟机边界；64 KiB 精简块 + skip_block_zeroing，4 KiB 写入后残留 60 KiB；六个部署 5614 个可测目录块全部来自他人；修复须清空既有映射与镜像缓存；判据=隔离要逐层验证、"分配时清零"须显式配置） | 2026-10-19（原文 2026-09-24） | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295407&idx=4&sn=99d7b1b770fe9bc89cf7ca7a6b6bc3ae |
+| 130 | 刘俊毅（腾讯云开发者） | 给 AI 写了 800 行规则反而更不听话（规则从 500 涨到 800 行后效果下降，根因是注意力被稀释；17 阶段各一份规则片段按阶段加载；三层知识=代码图谱/模块文档只写为什么/记忆自捕获；命中埋点统计淘汰僵尸条目；记忆→文档→规则单向晋升且 AI 只能建议；上百接口只暴露一个通用工具 + 一份手册；三道闸回读原文防转述失真；PRD 覆盖矩阵双向自检。记忆 148→24 条、13 条进化记录只 3 条升级为规则） | 2026-10-21 | https://mp.weixin.qq.com/s?__biz=MzI2NDU4OTExOQ==&mid=2247697801&idx=1&sn=3a7b94e654b48a3d06627ebd265ab14e |
+| 131 | Team Akka | 65 个开源项目规格驱动移植（五段式类型化规格：范围含排除理由/领域模型/按能力编号的确定性契约/待定决策/一致性绑源码与测试；规格缺口在下游两到四步才暴露；约 15 个审计员并行；同一 runner 差分对比 + 故意劣化原系统；99.3 小时 / 94.1 亿 token 其中输出仅 2550 万；57/65 改善；一致性 96.8–98.8%；基础设施与工具类中位慢约 47%；官方标注 dify 143333× 口径不公平） | 2026-09-03（InfoQ 编译 2026-10-20） | https://akka.io/blog/we-ported-65-oss-projects |
+| 132 | Julien Dubois（GitHub Blog，3 位 Java Champion 访谈） | 委派执行不委派责任（900 张幻灯片迁移 8–10 小时，并排跑两版 + 截图视觉与算法比对 + PDF 比对，"不能只说迁移完成"；测试描述超上下文后改为箭头记法 step→step→input，是共同设计信息表示而非让 AI 执行；停止一次性提示、先让 agent 采访你；任务专属验证门；教训回写成活的 Skill；确定性工具包住概率模型循环到无发现） | 2026-10-20 | https://github.blog/ai-and-ml/github-copilot/how-3-java-champions-are-using-github-copilot-for-increased-productivity/ |
 
 ---
 
@@ -313,3 +316,7 @@
 | 视觉软约束/数据认知约束/生码硬约束装配同一 DOM + Skill 正文压缩后显式恢复 + 缓存未命中四类归因 + 交接带记录地址 | §2.4 上下文压缩、§2.10 上下文成本与稳定前缀、§2.8 阶段上下文包 |
 | 行为差异替代 ground truth + 用测试时计算换成功率 + 维护 Harness 成本超过使用收益 | §7.10 自进化纪律、§9.5 Harness 熵 |
 | 隔离须逐层验证含存储分配器 + "分配时清零"显式配置 | §10.1 沙箱边界 |
+| 规则按阶段切片 + 三层知识分工（图谱/文档/记忆）+ 命中埋点淘汰 + 晋升克制 | §2.3 Context Budget、§2.9 分层上下文加载、§5.7 知识资产分层、§5.9 知识持续回流、§9.5 Harness 熵 |
+| 代码事实只由索引回答不抄进文档 + 关口回读原文 + 阶段产物编号固定 | §5.7 知识资产分层、§2.9 分层上下文加载 |
+| 规格是类型化数据 + 缺口下游两到四步才暴露 + 差分判定与故意劣化 + 分项报告与口径标注 | §12.3.1 大规模改造、§7.2 必备 Grader |
+| 委派执行不委派责任 + 任务专属验证门 + 并排对照验证 + 教训回写 Skill | §7.3 Gate 设计、§7.6 分层验证、§13.5 模块 AGENTS.md |
