@@ -7,11 +7,11 @@
 
 按"宁缺毋滥"原则，以下方向未找到满足筛选标准的 2026 年来源，明确标注：
 
-- **Netflix / LinkedIn 2026 年 Agent 生产文章**：**LinkedIn 已部分推翻（2026-10-22 核验）**——确有 2026 年文章（10-20 追踪基础设施重建、10-09 面向人与 agent 的数据上下文层），但前者属基础设施、后者属数据治理，均不合"agent 工程实践"方向，暂不收录。**Netflix 仍无法核验**：脚本请求 403，浏览器补读仍被 Cloudflare 人机验证拦截（页面显示 "Performing security verification"，Ray ID `a4e49eb38d51c4f6`）；"读不到"不等于"没有文章"，需人工在真实浏览器中核验。
+- **Netflix / LinkedIn 2026 年 Agent 生产文章**：**LinkedIn 已部分推翻（2026-10-22 核验）**——确有 2026 年文章（10-20 追踪基础设施重建、10-09 面向人与 agent 的数据上下文层），但前者属基础设施、后者属数据治理，均不合"agent 工程实践"方向，暂不收录。**Netflix 仍无法核验**：脚本请求 403，浏览器补读仍被 Cloudflare 人机验证拦截（页面显示 "Performing security verification"，Ray ID `a4e49eb38d51c4f6`）；"读不到"不等于"没有文章"，需人工在真实浏览器中核验。**2026-10-25 第三次核验仍失败**（Playwright 真实 Chromium，新 Ray ID `a4fd5464fbc0a8ca`），连续两次浏览器均被拦，转为仅人工核验。
 - **会议分享（ICML/NeurIPS/QCon/GopherCon 2026 有公开 slides/录像的 Agent 经验）**：未找到 2026 年内已公开且符合"真实问题+解决"的会议分享。
 - **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15、2026-10-19、2026-10-22 三次复验，含路径变体），未采纳；三次均为 404，疑似从未发布或已撤稿。
 - **OpenAI 开发者博客（developers.openai.com）各篇**：**此条已推翻，且读取方式需更正（2026-10-19）**。此前记为"全站不显示发布日期/日期客户端渲染，须用浏览器"；实测再更正为：**服务端渲染的日期用脚本即可读到**——`curl` 抓 `https://developers.openai.com/blog/<slug>` 能直接解析出 `Oct 14, 2026` 这类日期（2026-10-19 实测 8 篇全部成功），无需浏览器。已入库篇目：`Shell + Skills + Compaction` 2026-02-11、`Rethinking skills and prompts for GPT-6 Astra` 2026-09-11、`Testing Agent Skills Systematically with Evals` 2026-01-22、`Automating repetitive work at OpenAI with Codex` 2026-08-25、`Run long horizon tasks with Codex` 2026-02-23、`Codex as a platform` 2026-08-19。
-- **OpenAI 主站（openai.com）各篇**：对脚本请求返回 403（2026-10-16、2026-10-22 两次实测），需用浏览器读。**发现通道（2026-10-22 复验有效）**：`https://openai.com/news/rss.xml` 返回 200 且含完整标题、发布日期与链接（约 1,300 条），可直接用于发现与按日期筛选。**但正文读取比此前记录的更不稳定（2026-10-22 实测）**：`llms.txt`、`.md` 后缀、完整浏览器请求头全部 403；用 Playwright 真实 Chromium 补读时，一篇成功（`Patch the Planet` 2026-10-21），另一篇被 Cloudflare 挑战页拦住（`Using thousands of AI agents to uncover new leads in biological data`，标题显示 "Just a moment..."）。结论：RSS 可稳定用于发现，正文需逐篇尝试浏览器，且部分页面即使用自动化浏览器也不可读，须如实标注未核验。
+- **OpenAI 主站（openai.com）各篇**：对脚本请求返回 403（2026-10-16、2026-10-22 两次实测），需用浏览器读。**发现通道（2026-10-22 复验有效）**：`https://openai.com/news/rss.xml` 返回 200 且含完整标题、发布日期与链接（约 1,300 条），可直接用于发现与按日期筛选。**但正文读取比此前记录的更不稳定（2026-10-22 实测）**：`llms.txt`、`.md` 后缀、完整浏览器请求头全部 403；用 Playwright 真实 Chromium 补读时，一篇成功（`Patch the Planet` 2026-10-21），另一篇被 Cloudflare 挑战页拦住（`Using thousands of AI agents to uncover new leads in biological data`，标题显示 "Just a moment..."）。结论：RSS 可稳定用于发现，正文需逐篇尝试浏览器，且部分页面即使用自动化浏览器也不可读，须如实标注未核验。**2026-10-25 复验进一步恶化**：尝试的两篇（`forward-deployed-engineering-means`、`scaling-ai-research-for-complex-biological-data`）连上一轮成功的隐藏 webdriver 特征路径也全部停在挑战页（正文长度 0），应按"正文大概率读不到"预期处理，未核验条目不凭 RSS 摘要收录。
 
 ---
 
@@ -152,6 +152,12 @@
 | 130 | 刘俊毅（腾讯云开发者） | 给 AI 写了 800 行规则反而更不听话（规则从 500 涨到 800 行后效果下降，根因是注意力被稀释；17 阶段各一份规则片段按阶段加载；三层知识=代码图谱/模块文档只写为什么/记忆自捕获；命中埋点统计淘汰僵尸条目；记忆→文档→规则单向晋升且 AI 只能建议；上百接口只暴露一个通用工具 + 一份手册；三道闸回读原文防转述失真；PRD 覆盖矩阵双向自检。记忆 148→24 条、13 条进化记录只 3 条升级为规则） | 2026-10-21 | https://mp.weixin.qq.com/s?__biz=MzI2NDU4OTExOQ==&mid=2247697801&idx=1&sn=3a7b94e654b48a3d06627ebd265ab14e |
 | 131 | Team Akka | 65 个开源项目规格驱动移植（五段式类型化规格：范围含排除理由/领域模型/按能力编号的确定性契约/待定决策/一致性绑源码与测试；规格缺口在下游两到四步才暴露；约 15 个审计员并行；同一 runner 差分对比 + 故意劣化原系统；99.3 小时 / 94.1 亿 token 其中输出仅 2550 万；57/65 改善；一致性 96.8–98.8%；基础设施与工具类中位慢约 47%；官方标注 dify 143333× 口径不公平） | 2026-09-03（InfoQ 编译 2026-10-20） | https://akka.io/blog/we-ported-65-oss-projects |
 | 132 | Julien Dubois（GitHub Blog，3 位 Java Champion 访谈） | 委派执行不委派责任（900 张幻灯片迁移 8–10 小时，并排跑两版 + 截图视觉与算法比对 + PDF 比对，"不能只说迁移完成"；测试描述超上下文后改为箭头记法 step→step→input，是共同设计信息表示而非让 AI 执行；停止一次性提示、先让 agent 采访你；任务专属验证门；教训回写成活的 Skill；确定性工具包住概率模型循环到无发现） | 2026-10-20 | https://github.blog/ai-and-ml/github-copilot/how-3-java-champions-are-using-github-copilot-for-increased-productivity/ |
+| 133 | Diane Sarkis（Anthropic / Claude Platform） | 何时把子 Agent 折回主循环（保留三条件：上下文膨胀可测退化 / 需可丢弃新上下文并行 / 工具选择困难或提示冲突；折叠法 prompt→Skill、API→工具逐个折并以端到端评测对比，只看总分漏掉流程翻转；架构照抄组织图→重叠子 Agent + Frankenprompt + 局部评测；单循环快约 2 倍；工具超 30–50 个选择质量下降） | 2026-10-22 | https://claude.com/blog/building-agents-when-to-fold-subagents-into-your-main-agent-loop |
+| 134 | 冯钰捷（阿里巴巴 Token Foundry） | 协同进化陷阱与 CODA 评测协议（技能与模型共同训练分数上升但对特定技能版本依赖加深；技能变化后最差成功率低 5–13pp、原始增益 52%–93% 被抵消；一致率＝表达改写成败不变、抗干扰率＝面对错误技能保住底座能力；五维探针：同义改写/信息缺失/错误策略/组成变化/完全移除；arXiv 2610.20845） | 2026-10-22 | https://mp.weixin.qq.com/s?__biz=Mzg4NTczNzg2OA==&mid=2247512143&idx=1&sn=16294f252816161c648f6d5988c08032 |
+| 135 | Aditya Mulik（InfoQ 刊载，大型零售库存平台） | 生产级 LLM 平台工程（幻觉率约 15%→1.5% 不靠换模型靠平台化；平台边界强制 Schema + 校验错误回喂重试并设硬上限；按故障类别路由重试：Schema 违规/幻觉信号加强锚定/基础设施指数退避；输出 Schema 内置 grounded 与 out_of_scope 申报字段；第二个应用上线前建平台；按请求 Token 成本归因；原文 infoq.com/articles/platform-engineering-playbook-production-llms/） | 2026-10-24（编译） | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295910&idx=3&sn=1ba1717d6519299a7aab6c1a443ac941 |
+| 136 | 珈文（天猫技术团队，数字员工系列） | 驻群数字员工的工程判断（身份按动作拆：谁消费数据用谁的权限、谁产生结果记谁的归属，模型不能指定任意身份、角色映射由可信环境注入；网关做薄：不调 LLM 不做业务判断只做接住/留下/送准；免 LLM 确定性路由：子 Agent 等回复时消息去向已定直接转发；月均活跃交付 100+、热路径首响 P90 三秒内） | 2026-10-21 / 10-23 | https://mp.weixin.qq.com/s?__biz=MzAxNDEwNjk5OQ==&mid=2650546608&idx=1&sn=cd648c4e0239dac99c2b47563e5f7b43 |
+| 137 | Tom Dale（Vercel） | 计划即权限（Agent 先只读调查再提计划，一次审批整份计划授予超基线权限；计划内显式连接意图→工作项→所需权限→强制执行点；审批不超用户已有权限；只读也可能泄露敏感信息；逐动作审批会变成惯性点通过） | 2026-10-23 | https://vercel.com/blog/how-vercel-agent-accesses-production-safely |
+| 138 | 茹炳晟（腾讯云开发者） | Harness 落地 11 误区（引用 OpenAI 同模型仅改 Harness 6.7%→68.3%、LangChain Terminal Bench 2.0 52.8%→66.5%、MiniMax OctoCodingBench 最强模型 2/3 任务代码对过程错；库内新增两条组织层判断：约束人先于约束 AI——人侧掉链子是提效打折扣主因；企业级三约束——按用户权限边界/跨天长周期/行业合规为学术 benchmark 缺位；Harness 是被 bug 逼出来的是迭代出来的不是一次设计到位） | 2026-10-23 | https://mp.weixin.qq.com/s?__biz=MzI2NDU4OTExOQ==&mid=2247697854&idx=1&sn=e3712442caedb37e56364ab1a592c6c9 |
 
 ---
 
@@ -320,3 +326,9 @@
 | 代码事实只由索引回答不抄进文档 + 关口回读原文 + 阶段产物编号固定 | §5.7 知识资产分层、§2.9 分层上下文加载 |
 | 规格是类型化数据 + 缺口下游两到四步才暴露 + 差分判定与故意劣化 + 分项报告与口径标注 | §12.3.1 大规模改造、§7.2 必备 Grader |
 | 委派执行不委派责任 + 任务专属验证门 + 并排对照验证 + 教训回写 Skill | §7.3 Gate 设计、§7.6 分层验证、§13.5 模块 AGENTS.md |
+| 子 Agent 折回主循环三条件 + 折叠逐个对比看任务翻转 + 架构不照抄组织图 | §14.2 渐进式加载、§3.3 多 Agent 准入条件 |
+| 协同进化陷阱 + 一致率/抗干扰率双指标 + 技能变化探针下最差成功率 | §7.10 Skill 供应链与价值分层、§7.1 Eval 开发要求 |
+| 平台边界强制 Schema + 按故障类别路由重试 + grounded 证据申报字段 | §4.8 Error Contract、§7.6 分层验证与假修复检测 |
+| 身份按动作拆分 + 模型不能指定身份 + 网关做薄 + 免 LLM 确定性路由 | §10.7 非人类身份与委托链、§3.3.1 子 Agent 运行时协作契约 |
+| 计划即权限 + 审批不超用户已有权限 | §10.1 沙箱边界优先于频繁权限弹窗 |
+| 约束人先于约束 AI + 企业级三类缺位约束（权限边界/长周期/合规） | §1.2 Harness 设计 |
