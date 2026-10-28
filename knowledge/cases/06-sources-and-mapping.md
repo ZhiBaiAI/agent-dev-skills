@@ -7,8 +7,8 @@
 
 按"宁缺毋滥"原则，以下方向未找到满足筛选标准的 2026 年来源，明确标注：
 
-- **Netflix / LinkedIn 2026 年 Agent 生产文章**：**LinkedIn 已部分推翻（2026-10-22 核验）**——确有 2026 年文章（10-20 追踪基础设施重建、10-09 面向人与 agent 的数据上下文层），但前者属基础设施、后者属数据治理，均不合"agent 工程实践"方向，暂不收录。**Netflix 仍无法核验**：脚本请求 403，浏览器补读仍被 Cloudflare 人机验证拦截（页面显示 "Performing security verification"，Ray ID `a4e49eb38d51c4f6`）；"读不到"不等于"没有文章"，需人工在真实浏览器中核验。**2026-10-25 第三次核验仍失败**（Playwright 真实 Chromium，新 Ray ID `a4fd5464fbc0a8ca`），连续两次浏览器均被拦，转为仅人工核验。
-- **会议分享（ICML/NeurIPS/QCon/GopherCon 2026 有公开 slides/录像的 Agent 经验）**：未找到 2026 年内已公开且符合"真实问题+解决"的会议分享。
+- **Netflix / LinkedIn 2026 年 Agent 生产文章**：**LinkedIn 已部分推翻（2026-10-22 核验）**——确有 2026 年文章（10-20 追踪基础设施重建、10-09 面向人与 agent 的数据上下文层），但前者属基础设施、后者属数据治理，均不合"agent 工程实践"方向，暂不收录。**Netflix 仍无法核验**：脚本请求 403，浏览器补读仍被 Cloudflare 人机验证拦截（页面显示 "Performing security verification"，Ray ID `a4e49eb38d51c4f6`）；"读不到"不等于"没有文章"，需人工在真实浏览器中核验。**2026-10-25 第三次核验仍失败**（Playwright 真实 Chromium，新 Ray ID `a4fd5464fbc0a8ca`），连续两次浏览器均被拦，转为仅人工核验。**2026-10-28 第四次核验同样失败**（真实 Chromium + 隐藏 webdriver 特征），已连续四次自动化尝试全部被拦——建议停止脚本轮询，改为人工在真实浏览器打开后粘贴正文，避免每轮重复消耗。
+- **会议分享（ICML/NeurIPS/QCon/GopherCon 2026 有公开 slides/录像的 Agent 经验）**：**已部分推翻（2026-10-28）**——QCon 上海 2026（10-22 至 10-24）产生了可用素材，小红书 Seal、花椒两篇均源自该会演讲整理，已收为 #140、#141。但仍缺原始 slides/录像核验：这两条的关键数字来自 InfoQ 整理稿，建议后续补查官方录像核对。
 - **GitHub Blog《agents.md lessons from 2500 repos》原文**：被广泛引用但官方 URL 仍为 404（2026-10-15、2026-10-19、2026-10-22 三次复验，含路径变体），未采纳；三次均为 404，疑似从未发布或已撤稿。
 - **OpenAI 开发者博客（developers.openai.com）各篇**：**此条已推翻，且读取方式需更正（2026-10-19）**。此前记为"全站不显示发布日期/日期客户端渲染，须用浏览器"；实测再更正为：**服务端渲染的日期用脚本即可读到**——`curl` 抓 `https://developers.openai.com/blog/<slug>` 能直接解析出 `Oct 14, 2026` 这类日期（2026-10-19 实测 8 篇全部成功），无需浏览器。已入库篇目：`Shell + Skills + Compaction` 2026-02-11、`Rethinking skills and prompts for GPT-6 Astra` 2026-09-11、`Testing Agent Skills Systematically with Evals` 2026-01-22、`Automating repetitive work at OpenAI with Codex` 2026-08-25、`Run long horizon tasks with Codex` 2026-02-23、`Codex as a platform` 2026-08-19。
 - **OpenAI 主站（openai.com）各篇**：对脚本请求返回 403（2026-10-16、2026-10-22 两次实测），需用浏览器读。**发现通道（2026-10-22 复验有效）**：`https://openai.com/news/rss.xml` 返回 200 且含完整标题、发布日期与链接（约 1,300 条），可直接用于发现与按日期筛选。**但正文读取比此前记录的更不稳定（2026-10-22 实测）**：`llms.txt`、`.md` 后缀、完整浏览器请求头全部 403；用 Playwright 真实 Chromium 补读时，一篇成功（`Patch the Planet` 2026-10-21），另一篇被 Cloudflare 挑战页拦住（`Using thousands of AI agents to uncover new leads in biological data`，标题显示 "Just a moment..."）。结论：RSS 可稳定用于发现，正文需逐篇尝试浏览器，且部分页面即使用自动化浏览器也不可读，须如实标注未核验。**2026-10-25 复验进一步恶化**：尝试的两篇（`forward-deployed-engineering-means`、`scaling-ai-research-for-complex-biological-data`）连上一轮成功的隐藏 webdriver 特征路径也全部停在挑战页（正文长度 0），应按"正文大概率读不到"预期处理，未核验条目不凭 RSS 摘要收录。
@@ -158,6 +158,12 @@
 | 136 | 珈文（天猫技术团队，数字员工系列） | 驻群数字员工的工程判断（身份按动作拆：谁消费数据用谁的权限、谁产生结果记谁的归属，模型不能指定任意身份、角色映射由可信环境注入；网关做薄：不调 LLM 不做业务判断只做接住/留下/送准；免 LLM 确定性路由：子 Agent 等回复时消息去向已定直接转发；月均活跃交付 100+、热路径首响 P90 三秒内） | 2026-10-21 / 10-23 | https://mp.weixin.qq.com/s?__biz=MzAxNDEwNjk5OQ==&mid=2650546608&idx=1&sn=cd648c4e0239dac99c2b47563e5f7b43 |
 | 137 | Tom Dale（Vercel） | 计划即权限（Agent 先只读调查再提计划，一次审批整份计划授予超基线权限；计划内显式连接意图→工作项→所需权限→强制执行点；审批不超用户已有权限；只读也可能泄露敏感信息；逐动作审批会变成惯性点通过） | 2026-10-23 | https://vercel.com/blog/how-vercel-agent-accesses-production-safely |
 | 138 | 茹炳晟（腾讯云开发者） | Harness 落地 11 误区（引用 OpenAI 同模型仅改 Harness 6.7%→68.3%、LangChain Terminal Bench 2.0 52.8%→66.5%、MiniMax OctoCodingBench 最强模型 2/3 任务代码对过程错；库内新增两条组织层判断：约束人先于约束 AI——人侧掉链子是提效打折扣主因；企业级三约束——按用户权限边界/跨天长周期/行业合规为学术 benchmark 缺位；Harness 是被 bug 逼出来的是迭代出来的不是一次设计到位） | 2026-10-23 | https://mp.weixin.qq.com/s?__biz=MzI2NDU4OTExOQ==&mid=2247697854&idx=1&sn=e3712442caedb37e56364ab1a592c6c9 |
+| 139 | 珈文（天猫技术团队，数字员工效能篇） | 交接等待是周期主体（评估单元从阶段细化到轮：周期=Σ(每轮执行+接手等待)+外部等待，并行只沿关键路径；流动效率=流动天÷流逝天；静默只作排查入口，卡点 vs 悬置；回执/责任交接/问题解除三态分账；计时对象是问题不是群；261 段静默「等人回应」66%、其中 64% 自行恢复、中位 3 天——报干预收益须扣自然恢复。编码人工介入 0.5 轮/需求，39 个需求四档周期只缩短一到三成；流动效率低中高三组周期中位 22/14.5/8 天） | 2026-10-26 | https://mp.weixin.qq.com/s?__biz=MzAxNDEwNjk5OQ==&mid=2650546616&idx=1&sn=6de3cd4134e01fc868640284f93f0eac |
+| 140 | 孟洪进（小红书 Seal，AICon 演讲整理 / InfoQ） | 企业级 AI 助理规模化（Self-GC 上下文回收三阶段：异步出方案→预演→等安全时机提交，日 token 降 10–15%、峰值降约 20%；Auto 路由真实分布 70% 用高性价比模型/22% 高级/3% 顶级，省约 69% 成本，路由须计入缓存命中且要有 fallback；记忆三层 Session→Worklog→结构化 Memory Wiki；Skillhub 9000+ Skill 但调用集中前 100–200；三天内测、一个月全员覆盖） | 2026-10-27 | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651296067&idx=2&sn=f783a9c1898aa1bcbc0a6cac8aec0f5a |
+| 141 | 封冰清（花椒 / 超序 AI，InfoQ 访谈） | 沙箱是选项不是标配（判据：该执行环境资源是否需在多用户间物理隔离；专属机单主体消费则无差别）；平台需分层（模型调用/Agent 运行/命令执行分开，否则「只调一次模型」也要背整套机制）；公共内核不承载部门业务逻辑；反面案例：对账场景全交 Agent，单用户几天耗两三万元；30 个 Agent、日均 8300 万 token | 2026-10-26 | https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651295972&idx=3&sn=2980dbf71403b3ae9af307cc41852314 |
+| 142 | Harrison Chase, Caspar Broekhuizen（LangChain） | 公司级 harness 五组件（落在人已在的地方；知道谁在问且按工具分别选代理身份或自有身份；记忆分全局与用户两层；代码在沙箱跑并可访问鉴权服务；大部分运行由调度或事件触发）；身份粒度细化到单工具（处理消息用调用者身份、后台评审用自有身份；固定账号工具用固定身份、代表个人的工具限私聊）；backlog 变大时 Slack 不再是合适界面 | 2026-10-24 | https://www.langchain.com/blog/components-building-company-harness |
+| 143 | Amal Irgashev, Shreya Talegaonkar（LangChain） | 设计 Agent 的四条经验（品味来自上下文：给原则与防垃圾护栏，否则模型给分布性收敛；给 agent 一台设计师的电脑：每会话独立沙箱、跨工具、能检查自己渲染结果；**模型变强就删补偿性规则**；长跑任务需要多人协作 UX）。3000+ 资产、80+ 幻灯片；中位请求成本 8 美元→0.5 美元；迁移后自有代码减约 80%；四个月迭代 | 2026-10-27 | https://www.langchain.com/blog/design-agent |
+| 144 | 飞樰（阿里技术 / Qoder） | Personal Agent 主动性两轴（横轴谁定义问题 L1–L5，L4 起 Agent 自算差距且前提是差距可计算；纵轴做到哪一步：告知/建议/执行；两轴独立）；授权跟着子任务走不跟着目标走；能否交出去看失败代价三问（能否撤回/影响到谁/能否验证）；杠杆只有把目标与验收规则说清楚。实测自建 PA：276 条 todo、138 条完成、126 条集中手动核销、loop 自关 0 条 | 2026-10-26 | https://mp.weixin.qq.com/s?__biz=Mzg4NTczNzg2OA==&mid=2247512178&idx=1&sn=78ebbd60fa0df076d9e53b5ae7d109e0 |
 
 ---
 
@@ -332,3 +338,10 @@
 | 身份按动作拆分 + 模型不能指定身份 + 网关做薄 + 免 LLM 确定性路由 | §10.7 非人类身份与委托链、§3.3.1 子 Agent 运行时协作契约 |
 | 计划即权限 + 审批不超用户已有权限 | §10.1 沙箱边界优先于频繁权限弹窗 |
 | 约束人先于约束 AI + 企业级三类缺位约束（权限边界/长周期/合规） | §1.2 Harness 设计 |
+| 按轮核算周期 + 流动效率 + 静默只作线索 + 回执/接手/解决三态 + 报收益扣自然恢复 | §5.5 Working Memory 与行为资产（交接等待与流动效率） |
+| 持续回收优于一次性裁剪（异步出方案→预演→等安全时机） | §2.4 上下文压缩 |
+| 路由计入缓存命中 + 先查真实任务分布 | §9.6 成本可观测与预算控制 |
+| 沙箱是选项不是标配（判据为是否需多用户物理隔离） | §10.1 沙箱边界优先于频繁权限弹窗 |
+| 模型变强就删补偿性规则 | §1.2 Harness 设计 |
+| 主动性两轴 + 授权跟子任务走 + 失败代价三问 | §3.6 机器、Agent 与人工分工 |
+| 身份选择细化到单工具粒度 | §10.7 非人类身份与委托链 |
